@@ -23,4 +23,4 @@ def text_handler(message):
     else:
         bot.send_message(chat_id, 'Говори понятнее')
 		
-bot.polling()
+bot.polling(none_stop=True)
