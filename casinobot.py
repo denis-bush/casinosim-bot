@@ -16,10 +16,6 @@ class BotHandler:
         resp = requests.get(self.api_url + method, params)
         result_json = resp.json()['result']
         return result_json
-		
-	def get_chat_id(update):  
-		chat_id = update['message']['chat']['id']
-		chat_id
 
     def send_message(self, chat_id, text):
         params = {'chat_id': chat_id, 'text': text}
