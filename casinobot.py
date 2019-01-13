@@ -19,7 +19,7 @@ class BotHandler:
 		
 	def get_chat_id(update):  
 		chat_id = update['message']['chat']['id']
-    return chat_id
+		chat_id
 
     def send_message(self, chat_id, text):
         params = {'chat_id': chat_id, 'text': text}
