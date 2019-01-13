@@ -1,1 +1,1 @@
-web: python casinobot.py
+bot: python3 casinobot.py
