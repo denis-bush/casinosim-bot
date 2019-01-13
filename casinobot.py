@@ -20,8 +20,8 @@ logger = logging.getLogger(__name__)
 logger.setLevel(logging.DEBUG)
 
 TOKEN = '631046420:AAHgOJwxSO8g1-hN9boIJYOC-nPEWKN-mDc'  # old revoked token
-ADMIN_USERS = [8553438, 93238420]
-CASINO_CHAT_ID = -1001044483707
+ADMIN_USERS = [185809972]
+CASINO_CHAT_ID = 303262877
 
 r = redis.StrictRedis(host='localhost', port=6379, decode_responses=True)
 j = None
