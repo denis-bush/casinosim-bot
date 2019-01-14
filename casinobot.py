@@ -1,6 +1,7 @@
 import telebot
 import bs4
 import parser
+import dice
 
 #main variables
 TOKEN = "631046420:AAHgOJwxSO8g1-hN9boIJYOC-nPEWKN-mDc"
@@ -11,6 +12,7 @@ bot = telebot.TeleBot(TOKEN)
 def start_handler(message):
     global isRunning
     isRunning=False
+    bot.send_message(chat_id, 'Напишите /start, чтобы начать')
     if not isRunning:
         chat_id = message.chat.id
         bot.send_message(chat_id, 'Привет! Я - бот, симулятор казино!')
@@ -23,8 +25,8 @@ def askGame(message):
     chat_id = message.chat.id
     text = message.text
     if text == "1":
-        msg = bot.send_message(chat_id, 'Запускаю...')
-        bot.register_next_step_handler(msg, dice)
+        msg = bot.send_message(chat_id, 'Добро пожаловать в игру "Кости"! 🎲')
+        bot.register_next_step_handler(msg, dice.startGame)
     elif text == "2":
         msg = bot.send_message(chat_id, 'Данная функция всё ещё находится в разработке')
         bot.register_next_step_handler(msg, askGame)
@@ -33,14 +35,6 @@ def askGame(message):
         msg = bot.send_message(chat_id, 'Неверная команда, попробуйте ещё раз')	
         bot.register_next_step_handler(msg, askGame)
         return
-
-def dice(message):
-    chat_id = message.chat.id
-    text = message.text
-    bot.send_message(chat_id, 'Добро пожаловать в игру "Кости"! Press any key to continue')
-    msg = bot.send_message(chat_id, 'Принято, ' + text + '!')	
-    isRunning=False
-    bot.register_next_step_handler(msg, start_handler)
 
 @bot.message_handler(content_types=['text'])
 def text_handler(message):
