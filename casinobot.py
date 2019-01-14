@@ -32,7 +32,7 @@ def askGame(message):
         bot.register_next_step_handler(msg, askGame)
         return
 
-def dice(message)
+def dice(message):
     chat_id = message.chat.id
     text = message.text
     bot.send_message(chat_id, 'Добро пожаловать в игру "Кости"! Press any key to continue')
