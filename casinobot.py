@@ -54,6 +54,6 @@ def text_handler(message):
         msg = bot.send_message(chat_id, 'Возвращаюсь в главное меню')
         bot.register_next_step_handler(msg, start_handler)
     else:
-        bot.send_message(chat_id, 'Говори понятнее')
+        bot.send_message(chat_id, 'Я тебя не понимаю')
 		
 bot.polling(none_stop=True)
