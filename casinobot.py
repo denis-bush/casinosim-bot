@@ -47,7 +47,7 @@ def text_handler(message):
         bot.send_message(chat_id, 'Привет, я бот - симулятор казино.')
     elif text == "сыграем?":
         bot.send_message(chat_id, 'Мы ещё закрыты, пожалуйста, приходите позже')
-	elif text == "стоп":
+    elif text == "стоп":
         isRunning=False
     else:
         bot.send_message(chat_id, 'Говори понятнее')
