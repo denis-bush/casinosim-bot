@@ -39,6 +39,7 @@ def dice(message):
     bot.send_message(chat_id, 'Добро пожаловать в игру "Кости"! Press any key to continue')
     msg = bot.send_message(chat_id, 'Принято, ' + text + '!')	
     isRunning=False
+    bot.register_next_step_handler(msg, start_handler)
 
 @bot.message_handler(content_types=['text'])
 def text_handler(message):
@@ -49,7 +50,8 @@ def text_handler(message):
     elif text == "сыграем?":
         bot.send_message(chat_id, 'Мы ещё закрыты, пожалуйста, приходите позже')
     elif text == "стоп":
-        isRunning=False
+        bot.send_message(chat_id, 'Возвращаюсь в главное меню')
+        bot.register_next_step_handler(msg, start_handler)
     else:
         bot.send_message(chat_id, 'Говори понятнее')
 		
