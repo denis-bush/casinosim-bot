@@ -14,5 +14,5 @@ def startGame(message):
 
 def endGame (message):
     from casinobot import start_handler 
-    return start_handler()
+    return start_handler(message)
     

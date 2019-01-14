@@ -35,7 +35,7 @@ def askGame(message):
 
 def diceImport(message):
     from dice import startGame #Избегаем взаимного импорта
-    return startGame()
+    return startGame(message)
 
 @bot.message_handler(content_types=['text'])
 def text_handler(message):
