@@ -10,5 +10,6 @@ def startGame(message):
     text = message.text
     
     msg = bot.send_message(chat_id, 'Принято, ' + text + '!')	
+    bot.send_message(chat_id, 'Напишите /start, чтобы начать')
     isRunning=False
     bot.register_next_step_handler(msg, casinobot.start_handler)
