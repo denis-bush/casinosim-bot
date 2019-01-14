@@ -1,13 +1,12 @@
 import telebot
 import bs4
-import parser
 import dice
 
-#main variables
+#Токен
 TOKEN = "631046420:AAHgOJwxSO8g1-hN9boIJYOC-nPEWKN-mDc"
 bot = telebot.TeleBot(TOKEN)
 
-#handlers
+#Функции
 @bot.message_handler(commands=['start', 'go'])
 def start_handler(message):
     global isRunning
