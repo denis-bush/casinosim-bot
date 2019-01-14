@@ -12,7 +12,7 @@ def start_handler(message):
     global isRunning
     if not isRunning:
         chat_id = message.chat.id
-		bot.send_message(chat_id, 'Привет! Я - бот, симулятор казино!')
+        bot.send_message(chat_id, 'Привет! Я - бот, симулятор казино!')
         text = message.text
         msg = bot.send_message(chat_id, 'Во что сыграем? 1 - кости, 2 - слот-машина')
         bot.register_next_step_handler(msg, askGame) #Выбираем игру
