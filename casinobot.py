@@ -33,6 +33,7 @@ def askGame(message):
         return
 
 def dice(message):
+    global isRunning
     chat_id = message.chat.id
     text = message.text
     bot.send_message(chat_id, 'Добро пожаловать в игру "Кости"! Press any key to continue')
@@ -41,6 +42,7 @@ def dice(message):
 
 @bot.message_handler(content_types=['text'])
 def text_handler(message):
+    global isRunning
     text = message.text.lower()
     chat_id = message.chat.id
     if text == "привет":
