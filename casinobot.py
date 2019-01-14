@@ -9,7 +9,8 @@ bot = telebot.TeleBot(TOKEN)
 #handlers
 @bot.message_handler(commands=['start', 'go'])
 def start_handler(message):
-    global isRunning=False
+    global isRunning
+    isRunning=False
     if not isRunning:
         chat_id = message.chat.id
         bot.send_message(chat_id, 'Привет! Я - бот, симулятор казино!')
