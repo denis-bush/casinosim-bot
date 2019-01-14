@@ -1,8 +1,11 @@
 import telebot
 import bs4
 
-def startGame(message):
+def startGameImport(message):
     from casinobot import start_handler, TOKEN, bot
+    startGame(message)
+    
+def startGame(message)
     chat_id = message.chat.id
     text = message.text
     
