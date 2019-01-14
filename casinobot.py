@@ -51,7 +51,7 @@ def text_handler(message):
     elif text == "сыграем?":
         bot.send_message(chat_id, 'Мы ещё закрыты, пожалуйста, приходите позже')
     elif text == "стоп":
-        bot.send_message(chat_id, 'Возвращаюсь в главное меню')
+        msg = bot.send_message(chat_id, 'Возвращаюсь в главное меню')
         bot.register_next_step_handler(msg, start_handler)
     else:
         bot.send_message(chat_id, 'Говори понятнее')
