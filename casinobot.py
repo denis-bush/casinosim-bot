@@ -19,7 +19,7 @@ def start_handler(message):
         isRunning = True
         
 def askGame(message):
-    from dice import startGame
+    import dice #Избегаем взаимного импорта
     chat_id = message.chat.id
     text = message.text
     if text == "1":
