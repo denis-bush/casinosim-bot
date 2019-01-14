@@ -1,6 +1,6 @@
 import telebot
 import bs4
-import dice
+from dice import startGame
 
 #Токен
 TOKEN = "631046420:AAHgOJwxSO8g1-hN9boIJYOC-nPEWKN-mDc"
