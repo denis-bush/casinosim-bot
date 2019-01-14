@@ -13,6 +13,6 @@ def startGame(message):
     bot.register_next_step_handler(msg, endGame)
 
 def endGame (message):
-    from casinobot import start_handler, 
+    from casinobot import start_handler 
     return start_handler()
     
