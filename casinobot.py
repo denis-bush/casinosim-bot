@@ -23,6 +23,7 @@ def askGame(message):
     chat_id = message.chat.id
     text = message.text
     if text == "1":
+        msg = bot.send_message(chat_id, 'Запускаю...')
         bot.register_next_step_handler(msg, dice)
     elif text == "2":
         msg = bot.send_message(chat_id, 'Данная функция всё ещё находится в разработке')
