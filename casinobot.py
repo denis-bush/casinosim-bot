@@ -34,7 +34,7 @@ def mainMenu(bot, update):
         return helpMenu
     elif update.message.text == 'Сброс данных':
         return resetBot
-    else
+    else:
         bot.send_message(chat_id = update.message.chat.id, 'Прости, я тебя не понимаю. Попробуй выбрать команду из меню.')
         return mainMenu
 
@@ -54,17 +54,17 @@ def resetBot(bot, update):
 #@bot.message_handler(content_types=['text'])
 #def askGame(message):
  #   text = message.text
-  #  if text == "1":
-   #     msg = bot.send_message(chat_id = update.message.chat.id, 'Добро пожаловать в игру "Кости"! 🎲')
-  #      bot.register_next_step_handler(msg, diceStart)
- #   elif text == "2":
-   #     msg = bot.send_message(chat_id, 'Данная функция всё ещё находится в разработке')
-    #    bot.register_next_step_handler(msg, askGame) 
-  #      return
-  #  else:
-   #     msg = bot.send_message(chat_id, 'Неверная команда, попробуйте ещё раз')	
-    #    bot.register_next_step_handler(msg, askGame)
-     #   return
+#    if text == "1":
+#        msg = bot.send_message(chat_id = update.message.chat.id, 'Добро пожаловать в игру "Кости"! 🎲')
+#        bot.register_next_step_handler(msg, diceStart)
+#    elif text == "2":
+#        msg = bot.send_message(chat_id, 'Данная функция всё ещё находится в разработке')
+#        bot.register_next_step_handler(msg, askGame) 
+#        return
+#    else:
+#        msg = bot.send_message(chat_id, 'Неверная команда, попробуйте ещё раз')	
+#        bot.register_next_step_handler(msg, askGame)
+#        return
 
 
 def textHandler(bot, update):
