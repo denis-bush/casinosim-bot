@@ -1,11 +1,15 @@
 import os, sys
 import random
 
+sys.path.append('/python-telegram-bot')
 from telegram.ext import CommandHandler, Filters, MessageHandler, Updater
+sys.path.append('/pyTelegramBotAPI/')
 from telebot import types
 from time import sleep
 
-sys.path.append(os.path.join(os.path.abspath('\python-telegram-bot'), 'telegram'))
+
+
+
 database = {}
 
 def startBot(bot, update):
