@@ -1,54 +1,91 @@
-import telebot
-import bs4
+import os
+import random
 
-#Токен
-TOKEN = "631046420:AAHgOJwxSO8g1-hN9boIJYOC-nPEWKN-mDc"
-bot = telebot.TeleBot(TOKEN)
+from telegram.ext import CommandHandler, Filters, MessageHandler, Updater
+from telebot import types
+from time import sleep
 
-#Функции
-@bot.message_handler(commands=['start', 'go'])
-def start_handler(message):
-    global isRunning
-    isRunning=False
-    if not isRunning:
-        chat_id = message.chat.id
-        bot.send_message(chat_id, 'Привет! Я - бот, симулятор казино!')
-        text = message.text
-        msg = bot.send_message(chat_id, 'Во что сыграем? 1 - кости, 2 - слот-машина')
-        bot.register_next_step_handler(msg, askGame) #Выбираем игру
-        isRunning = True
-        
-def askGame(message):
-    chat_id = message.chat.id
-    text = message.text
-    if text == "1":
-        msg = bot.send_message(chat_id, 'Добро пожаловать в игру "Кости"! 🎲')
-        bot.register_next_step_handler(msg, diceImport)
-    elif text == "2":
-        msg = bot.send_message(chat_id, 'Данная функция всё ещё находится в разработке')
-        bot.register_next_step_handler(msg, askGame) 
-        return
-    else:
-        msg = bot.send_message(chat_id, 'Неверная команда, попробуйте ещё раз')	
-        bot.register_next_step_handler(msg, askGame)
-        return
+database = {}
 
-def diceImport(message):
-    from dice import startGame #Избегаем взаимного импорта
-    return startGame(message)
+def startBot(bot, update):
+    bot.send_message(chat_id = update.message.chat.id, 'Привет! Я - бот, симулятор казино! Как к тебе можно обращаться?')
+    user_id = update.message.from_user.id
+    username = update.message.text
+    
+    bot.send_message(chat_id = update.message.chat.id, username + '? Хорошо, я запомнил!')
+    database[user_id] = {"balance": 1000, 'dice_won': 0, 'dice_lost': 0}
+    time.sleep(1.5)
+    bot.send_message(chat_id = update.message.chat.id, username + ', твой стартовый баланс: ' + database[user_id]['balance'])
+    
+def mainMenu(bot, update):
+    menu_markup = types.ReplyKeyboardMarkup()
+    menu_markup.row('Сыграть в "Кости"', 'Сыграть в слот-машину')
+    menu_markup.row('Статистика профиля')
+    menu_markup.row('Справка', 'Сброс данных')
+    reply_markup = ReplyKeyboardMarkup(reply_keyboard)
+     
+    if update.message.text == 'Сыграть в "Кости"':
+        return diceStart
+    elif update.message.text == 'Сыграть в слот-машину':
+        return slotStart
+    elif update.message.text == 'Статистика профиля':
+        return printStats
+    elif update.message.text == 'Справка':
+        return helpMenu
+    elif update.message.text == 'Сброс данных':
+        return resetBot
+    else
+        bot.send_message(chat_id = update.message.chat.id, 'Прости, я тебя не понимаю. Попробуй выбрать команду из меню.')
+        return mainMenu
 
-@bot.message_handler(content_types=['text'])
-def text_handler(message):
-    text = message.text.lower()
-    chat_id = message.chat.id
+def diceStart(bot, update):
+    bot.send_message(chat_id = update.message.chat.id, 'Кости')
+
+def slotStart(bot, update):
+    bot.send_message(chat_id = update.message.chat.id, 'Слоты')
+
+def helpMenu(bot, update):
+    bot.send_message(chat_id = update.message.chat.id, 'Справка')
+
+def resetBot(bot, update):
+    bot.send_message(chat_id = update.message.chat.id, 'Сброс')  
+
+#update.message.reply_text(text="Чем могу быть полезен?",      
+#@bot.message_handler(content_types=['text'])
+#def askGame(message):
+ #   text = message.text
+  #  if text == "1":
+   #     msg = bot.send_message(chat_id = update.message.chat.id, 'Добро пожаловать в игру "Кости"! 🎲')
+  #      bot.register_next_step_handler(msg, diceStart)
+ #   elif text == "2":
+   #     msg = bot.send_message(chat_id, 'Данная функция всё ещё находится в разработке')
+    #    bot.register_next_step_handler(msg, askGame) 
+  #      return
+  #  else:
+   #     msg = bot.send_message(chat_id, 'Неверная команда, попробуйте ещё раз')	
+    #    bot.register_next_step_handler(msg, askGame)
+     #   return
+
+
+def textHandler(bot, update):
+    user_id = update.message.from_user.id
+    if user_id not in database.keys():
+        return bot.send_message(chat_id=update.message.chat_id, text="Пожалуйста, зарегистрируйся с помощью команды /start")
+    text = update.message.text.lower()
+    
     if text == "привет":
-        bot.send_message(chat_id, 'Привет, я бот - симулятор казино.')
-    elif text == "сыграем?":
-        bot.send_message(chat_id, 'Мы ещё закрыты, пожалуйста, приходите позже')
-    elif text == "стоп":
-        msg = bot.send_message(chat_id, 'Возвращаюсь в главное меню')
-        bot.register_next_step_handler(msg, start_handler)
+        bot.send_message(chat_id=update.message.chat_id, 'Привет! :)')
+    elif text == "пока":
+        bot.send_message(chat_id=update.message.chat_id, 'До встречи!')
     else:
-        bot.send_message(chat_id, 'Я тебя не понимаю')
+        bot.send_message(chat_id = update.message.chat.id, 'Прости, я тебя не понимаю. Попробуй выбрать команду из меню.')
+        return mainMenu
 
-bot.polling(none_stop=True) 
+if __name__ == '__main__':
+    token = os.getenv("token")
+    updater = Updater(token)
+    dispatcher = updater.dispatcher
+    dispatcher.add_handler(CommandHandler("start", startBot))
+    dispatcher.add_handler(MessageHandler(Filters.text, textHandler))
+    
+    bot.polling(none_stop=True)

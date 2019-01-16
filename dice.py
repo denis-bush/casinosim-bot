@@ -3,7 +3,7 @@ import bs4
 
 
 def startGame(message):
-    from casinobot import TOKEN, bot
+    from casinobot import bot
     chat_id = message.chat.id
     text = message.text
     
