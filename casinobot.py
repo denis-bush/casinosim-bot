@@ -88,4 +88,5 @@ if __name__ == '__main__':
     dispatcher.add_handler(CommandHandler("start", startBot))
     dispatcher.add_handler(MessageHandler(Filters.text, textHandler))
     
-    bot.polling(none_stop=True)
+    updater.start_polling()
+    updater.idle()
