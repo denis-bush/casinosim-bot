@@ -8,14 +8,14 @@ from time import sleep
 database = {}
 
 def startBot(bot, update):
-    bot.send_message(chat_id = update.message.chat.id, 'Привет! Я - бот, симулятор казино! Как к тебе можно обращаться?')
+    bot.send_message(chat_id = update.message.chat.id, text='Привет! Я - бот, симулятор казино! Как к тебе можно обращаться?')
     user_id = update.message.from_user.id
     username = update.message.text
     
-    bot.send_message(chat_id = update.message.chat.id, username + '? Хорошо, я запомнил!')
+    bot.send_message(chat_id = update.message.chat.id, text = username + '? Хорошо, я запомнил!')
     database[user_id] = {"balance": 1000, 'dice_won': 0, 'dice_lost': 0}
     time.sleep(1.5)
-    bot.send_message(chat_id = update.message.chat.id, username + ', твой стартовый баланс: ' + database[user_id]['balance'])
+    bot.send_message(chat_id = update.message.chat.id, text = username + ', твой стартовый баланс: ' + database[user_id]['balance'])
     
 def mainMenu(bot, update):
     menu_markup = types.ReplyKeyboardMarkup()
@@ -35,20 +35,20 @@ def mainMenu(bot, update):
     elif update.message.text == 'Сброс данных':
         return resetBot
     else:
-        bot.send_message(chat_id = update.message.chat.id, 'Прости, я тебя не понимаю. Попробуй выбрать команду из меню.')
+        bot.send_message(chat_id = update.message.chat.id, text = 'Прости, я тебя не понимаю. Попробуй выбрать команду из меню.')
         return mainMenu
 
 def diceStart(bot, update):
-    bot.send_message(chat_id = update.message.chat.id, 'Кости')
+    bot.send_message(chat_id = update.message.chat.id, text = 'Кости')
 
 def slotStart(bot, update):
-    bot.send_message(chat_id = update.message.chat.id, 'Слоты')
+    bot.send_message(chat_id = update.message.chat.id, text = 'Слоты')
 
 def helpMenu(bot, update):
-    bot.send_message(chat_id = update.message.chat.id, 'Справка')
+    bot.send_message(chat_id = update.message.chat.id, text = 'Справка')
 
 def resetBot(bot, update):
-    bot.send_message(chat_id = update.message.chat.id, 'Сброс')  
+    bot.send_message(chat_id = update.message.chat.id, text = 'Сброс')  
 
 #update.message.reply_text(text="Чем могу быть полезен?",      
 #@bot.message_handler(content_types=['text'])
@@ -74,11 +74,11 @@ def textHandler(bot, update):
     text = update.message.text.lower()
     
     if text == "привет":
-        bot.send_message(chat_id=update.message.chat_id, 'Привет! :)')
+        bot.send_message(chat_id=update.message.chat_id, text = 'Привет! :)')
     elif text == "пока":
-        bot.send_message(chat_id=update.message.chat_id, 'До встречи!')
+        bot.send_message(chat_id=update.message.chat_id, text = 'До встречи!')
     else:
-        bot.send_message(chat_id = update.message.chat.id, 'Прости, я тебя не понимаю. Попробуй выбрать команду из меню.')
+        bot.send_message(chat_id = update.message.chat.id, text = 'Прости, я тебя не понимаю. Попробуй выбрать команду из меню.')
         return mainMenu
 
 if __name__ == '__main__':
