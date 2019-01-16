@@ -1,16 +1,13 @@
-import os, sys
 import random
+import os
 
-sys.path.append('/python-telegram-bot')
-from telegram.ext import CommandHandler, Filters, MessageHandler, Updater
-sys.path.append('/pyTelegramBotAPI/')
 from telebot import types
+from telegram.ext import CommandHandler, Filters, MessageHandler, Updater
+
 from time import sleep
 
-
-
-
 database = {}
+
 
 def startBot(bot, update):
     bot.send_message(chat_id = update.message.chat.id, text='Привет! Я - бот, симулятор казино! Как к тебе можно обращаться?')
@@ -21,7 +18,8 @@ def startBot(bot, update):
     database[user_id] = {"balance": 1000, 'dice_won': 0, 'dice_lost': 0}
     time.sleep(1.5)
     bot.send_message(chat_id = update.message.chat.id, text = username + ', твой стартовый баланс: ' + database[user_id]['balance'])
-    
+
+
 def mainMenu(bot, update):
     menu_markup = types.ReplyKeyboardMarkup()
     menu_markup.row('Сыграть в "Кости"', 'Сыграть в слот-машину')
@@ -43,14 +41,21 @@ def mainMenu(bot, update):
         bot.send_message(chat_id = update.message.chat.id, text = 'Прости, я тебя не понимаю. Попробуй выбрать команду из меню.')
         return mainMenu
 
+
 def diceStart(bot, update):
     bot.send_message(chat_id = update.message.chat.id, text = 'Кости')
+
 
 def slotStart(bot, update):
     bot.send_message(chat_id = update.message.chat.id, text = 'Слоты')
 
+
+def printStats(bot, update):
+    bot.send_message(chat_id = update.message.chat.id, text = 'Слоты')
+
 def helpMenu(bot, update):
     bot.send_message(chat_id = update.message.chat.id, text = 'Справка')
+
 
 def resetBot(bot, update):
     bot.send_message(chat_id = update.message.chat.id, text = 'Сброс')  
