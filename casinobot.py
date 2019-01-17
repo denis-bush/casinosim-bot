@@ -11,11 +11,11 @@ bot = telebot.TeleBot("631046420:AAHgOJwxSO8g1-hN9boIJYOC-nPEWKN-mDc")
 
 @bot.message_handler(commands=['start'])
 def startBot(message):
-    if message.from_user.id in database.keys():
-        bot.send_message(message.chat.id, 'Привет! Я - бот, симулятор казино! Как к тебе можно обращаться?')
-        bot.register_next_step_handler(message, registerUser)
-    else:
-        bot.send_message(message.chat.id, 'Ты уже зарегистрировался!')
+    #if message.from_user.id in database.keys():
+    bot.send_message(message.chat.id, 'Привет! Я - бот, симулятор казино! Как к тебе можно обращаться?')
+    bot.register_next_step_handler(message, registerUser)
+    #else:
+    #    bot.send_message(message.chat.id, 'Ты уже зарегистрировался!')
 
 
 @bot.message_handler(commands=['start'])
@@ -51,10 +51,10 @@ def diceStart(message):
 def slotStart(message):
     bot.send_message(message.chat.id, text='Слоты')
 
-
 @bot.message_handler(func=lambda message: message.text == 'Статистика профиля' and message.content_type == 'text')
 def printStats(message):
-    bot.send_message(message.chat.id, text='Статистика')
+    bot.send_message(message.chat.id, text=database[message.from_user.id])
+
 
 
 @bot.message_handler(func=lambda message: message.text == 'Справка' and message.content_type == 'text')
@@ -65,25 +65,25 @@ def helpMenu(message):
 @bot.message_handler(func=lambda message: message.text == 'Сброс данных' and message.content_type == 'text')
 def resetBot(message):
     bot.send_message(message.chat.id, text='Сброс')
-    database.pop(message.from_user.id)
+    #database.pop(message.from_user.id)
 
 
-# @bot.message_handler(content_types=['text'])
-# def textHandler(message):
-#    user_id = message.from_user.id
-#    if user_id not in database.keys():
-#        return bot.send_message(message.chat.id,
-#                                text="Пожалуйста, зарегистрируйся с помощью команды /start")
-#    text = message.text.lower()
+@bot.message_handler(content_types=['text'])
+def textHandler(message):
+   user_id = message.from_user.id
+   if user_id not in database.keys():
+       return bot.send_message(message.chat.id,
+                               text="Пожалуйста, зарегистрируйся с помощью команды /start")
+   text = message.text.lower()
 
-#    if text == "привет":
-#        bot.send_message(message.chat.id, text='Привет! :)')
-#    elif text == "пока":
-#        bot.send_message(message.chat.id, text='До встречи!')
-#    else:
-#        bot.send_message(message.chat.id,
-#                         text='Прости, я тебя не понимаю. Попробуй выбрать команду из меню.')
-#        return mainMenu(message)
+   if text == "привет":
+       bot.send_message(message.chat.id, text='Привет! :)')
+   elif text == "пока":
+       bot.send_message(message.chat.id, text='До встречи!')
+   else:
+       bot.send_message(message.chat.id,
+                        text='Прости, я тебя не понимаю. Попробуй выбрать команду из меню.')
+       mainMenu(message)
 
 
 if __name__ == '__main__':
