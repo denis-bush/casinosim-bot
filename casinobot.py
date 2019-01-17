@@ -21,7 +21,7 @@ def registerUser(message):
     bot.send_message(message.chat.id, username + '? Хорошо, я запомнил!')
     database[user_id] = {"balance": 1000, 'dice_won': 0, 'dice_lost': 0}
     sleep(1.5)
-    bot.send_message(message.chat.id, str(username) + ', твой стартовый баланс: ' + database[user_id]['balance'])
+    bot.send_message(message.chat.id, str(username) + ', твой стартовый баланс: ' + str(database[user_id]['balance']))
     mainMenu(message)
 
 @bot.message_handler(commands=['menu'])
