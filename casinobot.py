@@ -10,8 +10,11 @@ bot = telebot.TeleBot("631046420:AAHgOJwxSO8g1-hN9boIJYOC-nPEWKN-mDc")
 
 @bot.message_handler(commands=['start'])
 def startBot(message):
-    bot.send_message(message.chat.id, 'Привет! Я - бот, симулятор казино! Как к тебе можно обращаться?')
-    bot.register_next_step_handler(message, registerUser)
+    if message.from_user.id in database.keys():
+        bot.send_message(message.chat.id, 'Привет! Я - бот, симулятор казино! Как к тебе можно обращаться?')
+        bot.register_next_step_handler(message, registerUser)
+    else:
+        bot.send_message(message.chat.id, 'Ты уже зарегистрировался!')
 
 
 @bot.message_handler(commands=['start'])
@@ -60,43 +63,26 @@ def helpMenu(message):
 
 @bot.message_handler(commands=['Сброс данных'])
 def resetBot(message):
-    bot.send_message(message.chat.id, text='Сброс')  
+    bot.send_message(message.chat.id, text='Сброс')
+    database.pop(message.from_user.id)
 
 
-@bot.message_handler(content_types=['text'])
-def textHandler(message):
-    user_id = message.from_user.id
-    if user_id not in database.keys():
-        return bot.send_message(message.chat.id,
-                                text="Пожалуйста, зарегистрируйся с помощью команды /start")
-    text = message.text.lower()
-
-    if text == "привет":
-        bot.send_message(message.chat.id, text='Привет! :)')
-    elif text == "пока":
-        bot.send_message(message.chat.id, text='До встречи!')
-    else:
-        bot.send_message(message.chat.id,
-                         text='Прости, я тебя не понимаю. Попробуй выбрать команду из меню.')
-        return mainMenu(message)
-
-# update.message.reply_text(text="Чем могу быть полезен?",      
 # @bot.message_handler(content_types=['text'])
-# def askGame(message):
-#   text=message.text
-#    if text == "1":
-#        msg = bot.send_message(message.chat.id, 'Добро пожаловать в игру "Кости"! 🎲')
-#        bot.register_next_step_handler(msg, diceStart)
-#    elif text == "2":
-#        msg = bot.send_message(chat.id, 'Данная функция всё ещё находится в разработке')
-#        bot.register_next_step_handler(msg, askGame) 
-#        return
+# def textHandler(message):
+#    user_id = message.from_user.id
+#    if user_id not in database.keys():
+#        return bot.send_message(message.chat.id,
+#                                text="Пожалуйста, зарегистрируйся с помощью команды /start")
+#    text = message.text.lower()
+
+#    if text == "привет":
+#        bot.send_message(message.chat.id, text='Привет! :)')
+#    elif text == "пока":
+#        bot.send_message(message.chat.id, text='До встречи!')
 #    else:
-#        msg = bot.send_message(chat.id, 'Неверная команда, попробуйте ещё раз')	
-#        bot.register_next_step_handler(msg, askGame)
-#        return
-
-
+#        bot.send_message(message.chat.id,
+#                         text='Прости, я тебя не понимаю. Попробуй выбрать команду из меню.')
+#        return mainMenu(message)
 
 
 if __name__ == '__main__':
