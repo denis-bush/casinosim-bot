@@ -11,13 +11,17 @@ bot = telebot.TeleBot("631046420:AAHgOJwxSO8g1-hN9boIJYOC-nPEWKN-mDc")
 @bot.message_handler(commands=['start'])
 def startBot(message):
     bot.send_message(message.chat.id, 'Привет! Я - бот, симулятор казино! Как к тебе можно обращаться?')
+    bot.register_next_step_handler(message, registerUser)
+
+
+@bot.message_handler(commands=['start'])
+def registerUser(message):
     user_id = message.from_user.id
     username = message.text
-    
     bot.send_message(message.chat.id, username + '? Хорошо, я запомнил!')
     database[user_id] = {"balance": 1000, 'dice_won': 0, 'dice_lost': 0}
     sleep(1.5)
-    bot.send_message(message.chat.id, username + ', твой стартовый баланс: ' + database[user_id]['balance'])
+    bot.send_message(message.chat.id, str(username) + ', твой стартовый баланс: ' + database[user_id]['balance'])
     mainMenu(message)
 
 @bot.message_handler(commands=['menu'])
