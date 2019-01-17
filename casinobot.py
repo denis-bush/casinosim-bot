@@ -2,76 +2,85 @@ import random
 import os
 from time import sleep
 
-from telebot import types
-#from telegram.ext import CommandHandler, Filters, MessageHandler, Updater
+import telebot
+# from telegram.ext import CommandHandler, Filters, MessageHandler, Updater
 
 database = {}
+bot = telebot.TeleBot("631046420:AAHgOJwxSO8g1-hN9boIJYOC-nPEWKN-mDc")
 
-
-def startBot(bot, update):
-    bot.send_message(chat_id=update.message.chat.id, 
-                     text='Привет! Я - бот, симулятор казино! Как к тебе можно обращаться?')
-    user_id = update.message.from_user.id
-    username = update.message.text
+@bot.message_handler(commands=['start'])
+def startBot(message):
+    bot.send_message(message.chat.id, 'Привет! Я - бот, симулятор казино! Как к тебе можно обращаться?')
+    user_id = message.from_user.id
+    username = message.text
     
-    bot.send_message(chat_id=update.message.chat.id, text=username + '? Хорошо, я запомнил!')
+    bot.send_message(message.chat.id, username + '? Хорошо, я запомнил!')
     database[user_id] = {"balance": 1000, 'dice_won': 0, 'dice_lost': 0}
     sleep(1.5)
-    bot.send_message(chat_id=update.message.chat.id, 
-                     text=username + ', твой стартовый баланс: ' + database[user_id]['balance'])
+    bot.send_message(message.chat.id, username + ', твой стартовый баланс: ' + database[user_id]['balance'])
+    mainMenu(message)
 
-
-def mainMenu(bot, update):
-    keyboard = types.ReplyKeyboardMarkup(row_width=2)
-    b_dice = types.KeyboardButton(text='Сыграть в "Кости"')
-    b_slot = types.KeyboardButton(text='Сыграть в слот-машину')
-    b_stat = types.KeyboardButton(text='Статистика профиля')
-    b_help = types.KeyboardButton(text='Справка')
-    b_reset = types.KeyboardButton(text='Сброс данных')
+@bot.message_handler(commands=['menu'])
+def mainMenu(message):
+    keyboard = telebot.types.ReplyKeyboardMarkup(row_width=2)
+    b_dice = telebot.types.KeyboardButton(text='Сыграть в "Кости"')
+    b_slot = telebot.types.KeyboardButton(text='Сыграть в слот-машину')
+    b_stat = telebot.types.KeyboardButton(text='Статистика профиля')
+    b_help = telebot.types.KeyboardButton(text='Справка')
+    b_reset = telebot.types.KeyboardButton(text='Сброс данных')
     keyboard.row(b_dice, b_slot)
     keyboard.row(b_stat)
     keyboard.row(b_help, b_reset)
-     
-    if update.message.text == 'Сыграть в "Кости"':
-        return diceStart
-    elif update.message.text == 'Сыграть в слот-машину':
-        return slotStart
-    elif update.message.text == 'Статистика профиля':
-        return printStats
-    elif update.message.text == 'Справка':
-        return helpMenu
-    elif update.message.text == 'Сброс данных':
-        return resetBot
+
+
+@bot.message_handler(commands=['Сыграть в "Кости"'])
+def diceStart(message):
+    bot.send_message(message.chat.id, text='Кости')
+
+
+@bot.message_handler(commands=['Сыграть в слот-машину'])
+def slotStart(message):
+    bot.send_message(message.chat.id, text='Слоты')
+
+
+@bot.message_handler(commands=['Статистика профиля'])
+def printStats(message):
+    bot.send_message(message.chat.id, text='Статистика')
+
+
+@bot.message_handler(commands=['Справка'])
+def helpMenu(message):
+    bot.send_message(message.chat.id, text='Справка')
+
+
+@bot.message_handler(commands=['Сброс данных'])
+def resetBot(message):
+    bot.send_message(message.chat.id, text='Сброс')  
+
+
+@bot.message_handler(content_types=['text'])
+def textHandler(message):
+    user_id = message.from_user.id
+    if user_id not in database.keys():
+        return bot.send_message(message.chat_id,
+                                text="Пожалуйста, зарегистрируйся с помощью команды /start")
+    text = message.text.lower()
+
+    if text == "привет":
+        bot.send_message(message.chat_id, text='Привет! :)')
+    elif text == "пока":
+        bot.send_message(message.chat_id, text='До встречи!')
     else:
-        bot.send_message(chat_id=update.message.chat.id, 
+        bot.send_message(message.chat.id,
                          text='Прости, я тебя не понимаю. Попробуй выбрать команду из меню.')
-        return mainMenu
-
-
-def diceStart(bot, update):
-    bot.send_message(chat_id=update.message.chat.id, text='Кости')
-
-
-def slotStart(bot, update):
-    bot.send_message(chat_id=update.message.chat.id, text='Слоты')
-
-
-def printStats(bot, update):
-    bot.send_message(chat_id=update.message.chat.id, text='Слоты')
-
-def helpMenu(bot, update):
-    bot.send_message(chat_id=update.message.chat.id, text='Справка')
-
-
-def resetBot(bot, update):
-    bot.send_message(chat_id=update.message.chat.id, text='Сброс')  
+        return mainMenu(message)
 
 # update.message.reply_text(text="Чем могу быть полезен?",      
 # @bot.message_handler(content_types=['text'])
 # def askGame(message):
 #   text=message.text
 #    if text == "1":
-#        msg = bot.send_message(chat_id=update.message.chat.id, 'Добро пожаловать в игру "Кости"! 🎲')
+#        msg = bot.send_message(message.chat.id, 'Добро пожаловать в игру "Кости"! 🎲')
 #        bot.register_next_step_handler(msg, diceStart)
 #    elif text == "2":
 #        msg = bot.send_message(chat_id, 'Данная функция всё ещё находится в разработке')
@@ -83,28 +92,7 @@ def resetBot(bot, update):
 #        return
 
 
-def textHandler(bot, update):
-    user_id = update.message.from_user.id
-    if user_id not in database.keys():
-        return bot.send_message(chat_id=update.message.chat_id, 
-                                text="Пожалуйста, зарегистрируйся с помощью команды /start")
-    text = update.message.text.lower()
-    
-    if text == "привет":
-        bot.send_message(chat_id=update.message.chat_id, text='Привет! :)')
-    elif text == "пока":
-        bot.send_message(chat_id=update.message.chat_id, text='До встречи!')
-    else:
-        bot.send_message(chat_id=update.message.chat.id, 
-                         text='Прости, я тебя не понимаю. Попробуй выбрать команду из меню.')
-        return mainMenu
+
 
 if __name__ == '__main__':
-    token = os.getenv("631046420:AAHgOJwxSO8g1-hN9boIJYOC-nPEWKN-mDc")
-    #updater = Updater(token)
-    #dispatcher = updater.dispatcher
-    #dispatcher.add_handler(CommandHandler("start", startBot))
-    #dispatcher.add_handler(MessageHandler(Filters.text, textHandler))
-    
-    #updater.start_polling()
-    #updater.idle()
+    bot.polling(none_stop=True)
