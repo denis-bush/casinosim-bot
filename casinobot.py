@@ -3,7 +3,7 @@ import os
 from time import sleep
 
 from telebot import types
-from telegram.ext import CommandHandler, Filters, MessageHandler, Updater
+#from telegram.ext import CommandHandler, Filters, MessageHandler, Updater
 
 database = {}
 
@@ -101,10 +101,10 @@ def textHandler(bot, update):
 
 if __name__ == '__main__':
     token = os.getenv("631046420:AAHgOJwxSO8g1-hN9boIJYOC-nPEWKN-mDc")
-    updater = Updater(token)
-    dispatcher = updater.dispatcher
-    dispatcher.add_handler(CommandHandler("start", startBot))
-    dispatcher.add_handler(MessageHandler(Filters.text, textHandler))
+    #updater = Updater(token)
+    #dispatcher = updater.dispatcher
+    #dispatcher.add_handler(CommandHandler("start", startBot))
+    #dispatcher.add_handler(MessageHandler(Filters.text, textHandler))
     
-    updater.start_polling()
-    updater.idle()
+    #updater.start_polling()
+    #updater.idle()
