@@ -49,12 +49,12 @@ def diceStart(message):
 
 @bot.message_handler(func=lambda message: message.text == 'Сыграть в слот-машину' and message.content_type == 'text')
 def slotStart(message):
-    bot.send_message(message.chat.id, text=)'Слоты'
+    bot.send_message(message.chat.id, text='Слоты')
 
 
 @bot.message_handler(func=lambda message: message.text == 'Статистика профиля' and message.content_type == 'text')
 def printStats(message):
-    bot.send_message(message.chat.id, text=)'Статистика'
+    bot.send_message(message.chat.id, text='Статистика')
 
 
 @bot.message_handler(func=lambda message: message.text == 'Справка' and message.content_type == 'text')
