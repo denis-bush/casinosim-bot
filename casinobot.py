@@ -62,14 +62,14 @@ def resetBot(message):
 def textHandler(message):
     user_id = message.from_user.id
     if user_id not in database.keys():
-        return bot.send_message(message.chat_id,
+        return bot.send_message(message.chat.id,
                                 text="Пожалуйста, зарегистрируйся с помощью команды /start")
     text = message.text.lower()
 
     if text == "привет":
-        bot.send_message(message.chat_id, text='Привет! :)')
+        bot.send_message(message.chat.id, text='Привет! :)')
     elif text == "пока":
-        bot.send_message(message.chat_id, text='До встречи!')
+        bot.send_message(message.chat.id, text='До встречи!')
     else:
         bot.send_message(message.chat.id,
                          text='Прости, я тебя не понимаю. Попробуй выбрать команду из меню.')
@@ -83,11 +83,11 @@ def textHandler(message):
 #        msg = bot.send_message(message.chat.id, 'Добро пожаловать в игру "Кости"! 🎲')
 #        bot.register_next_step_handler(msg, diceStart)
 #    elif text == "2":
-#        msg = bot.send_message(chat_id, 'Данная функция всё ещё находится в разработке')
+#        msg = bot.send_message(chat.id, 'Данная функция всё ещё находится в разработке')
 #        bot.register_next_step_handler(msg, askGame) 
 #        return
 #    else:
-#        msg = bot.send_message(chat_id, 'Неверная команда, попробуйте ещё раз')	
+#        msg = bot.send_message(chat.id, 'Неверная команда, попробуйте ещё раз')	
 #        bot.register_next_step_handler(msg, askGame)
 #        return
 
