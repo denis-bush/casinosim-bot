@@ -6,6 +6,7 @@ import telebot
 # from telegram.ext import CommandHandler, Filters, MessageHandler, Updater
 
 database = {}
+# token = os.getenv("token")
 bot = telebot.TeleBot("631046420:AAHgOJwxSO8g1-hN9boIJYOC-nPEWKN-mDc")
 
 @bot.message_handler(commands=['start'])
@@ -23,7 +24,7 @@ def registerUser(message):
     username = message.text
     bot.send_message(message.chat.id, username + '? Хорошо, я запомнил!')
     database[user_id] = {"balance": 1000, 'dice_won': 0, 'dice_lost': 0}
-    sleep(1.5)
+    sleep(1)
     bot.send_message(message.chat.id, str(username) + ', твой стартовый баланс: ' + str(database[user_id]['balance']))
     mainMenu(message)
 
@@ -41,27 +42,27 @@ def mainMenu(message):
     bot.send_message(message.chat.id, 'Чем могу помочь?', reply_markup=keyboard)
 
 
-@bot.message_handler(commands=['Сыграть в "Кости"'])
+@bot.message_handler(func=lambda message: message.text == 'Сыграть в "Кости"' and message.content_type == 'text')
 def diceStart(message):
     bot.send_message(message.chat.id, text='Кости')
 
 
-@bot.message_handler(commands=['Сыграть в слот-машину'])
+@bot.message_handler(func=lambda message: message.text == 'Сыграть в слот-машину' and message.content_type == 'text')
 def slotStart(message):
-    bot.send_message(message.chat.id, text='Слоты')
+    bot.send_message(message.chat.id, text=)'Слоты'
 
 
-@bot.message_handler(commands=['Статистика профиля'])
+@bot.message_handler(func=lambda message: message.text == 'Статистика профиля' and message.content_type == 'text')
 def printStats(message):
-    bot.send_message(message.chat.id, text='Статистика')
+    bot.send_message(message.chat.id, text=)'Статистика'
 
 
-@bot.message_handler(commands=['Справка'])
+@bot.message_handler(func=lambda message: message.text == 'Справка' and message.content_type == 'text')
 def helpMenu(message):
     bot.send_message(message.chat.id, text='Справка')
 
 
-@bot.message_handler(commands=['Сброс данных'])
+@bot.message_handler(func=lambda message: message.text == 'Сброс данных' and message.content_type == 'text')
 def resetBot(message):
     bot.send_message(message.chat.id, text='Сброс')
     database.pop(message.from_user.id)
