@@ -100,7 +100,7 @@ def textHandler(bot, update):
         return mainMenu
 
 if __name__ == '__main__':
-    token = os.getenv("token")
+    token = os.getenv("631046420:AAHgOJwxSO8g1-hN9boIJYOC-nPEWKN-mDc")
     updater = Updater(token)
     dispatcher = updater.dispatcher
     dispatcher.add_handler(CommandHandler("start", startBot))
