@@ -35,6 +35,7 @@ def mainMenu(message):
     keyboard.row(b_dice, b_slot)
     keyboard.row(b_stat)
     keyboard.row(b_help, b_reset)
+    bot.send_message(message.chat.id, reply_markup=keyboard)
 
 
 @bot.message_handler(commands=['Сыграть в "Кости"'])
