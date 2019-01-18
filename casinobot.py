@@ -11,11 +11,11 @@ bot = telebot.TeleBot("631046420:AAHgOJwxSO8g1-hN9boIJYOC-nPEWKN-mDc")
 
 @bot.message_handler(commands=['start'])
 def startBot(message):
-    #if message.from_user.id in database.keys():
-    bot.send_message(message.chat.id, 'Привет! Я - бот, симулятор казино! Как к тебе можно обращаться?')
-    bot.register_next_step_handler(message, registerUser)
-    #else:
-    #    bot.send_message(message.chat.id, 'Ты уже зарегистрировался!')
+    if message.from_user.id not in database.keys():
+        bot.send_message(message.chat.id, 'Привет! Я - бот, симулятор казино! Как к тебе можно обращаться?')
+        bot.register_next_step_handler(message, registerUser)
+    else:
+        bot.send_message(message.chat.id, 'Ты уже зарегистрировался!')
 
 
 @bot.message_handler(commands=['start'])
@@ -66,7 +66,7 @@ def helpMenu(message):
 @bot.message_handler(func=lambda message: message.text == 'Сброс данных' and message.content_type == 'text')
 def resetBot(message):
     bot.send_message(message.chat.id, text='Сброс')
-    #database.pop(message.from_user.id)
+    database.pop(message.from_user.id)
 
 
 @bot.message_handler(content_types=['text'])
