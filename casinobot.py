@@ -116,8 +116,8 @@ def dicePlay(message, bet):
 
 
 @bot.message_handler(func=lambda message: message.text == 'Ещё раз' and message.content_type == 'text')
-def diceAgain(message):
-    dicePlay(message)
+def diceAgain(message, bet):
+    dicePlay(message, bet)
 
 
 @bot.message_handler(func=lambda message: message.text == 'Закончить' and message.content_type == 'text')
