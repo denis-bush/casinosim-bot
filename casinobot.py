@@ -97,13 +97,13 @@ def dicePlay(message, bet):
 
     # Проверяем результат и зачисляем или снимаем очки
     if diesum1 > diesum2:
-        database[user_id]["balance"] += int(bet)
-        database[user_id]["dice_won"] += int(bet)
+        database[user_id]["balance"] = int(database[user_id]["balance"]) + int(bet)
+        database[user_id]["dice_won"] = int(database[user_id]["dice_won"]) + int(bet)
         bot.send_message(message.chat.id, text='Поздравляю! Ты выиграл ' + bet + ' очков!')
         bot.send_message(message.chat.id, text='Твой баланс: ' + database[user_id]["balance"] + ' очков.')
     elif diesum1 < diesum2:
-        database[user_id]["balance"] -= bet
-        database[user_id]["dice_lost"] += bet
+        database[user_id]["balance"] = int(database[user_id]["balance"]) - int(bet)
+        database[user_id]["dice_lost"] = int(database[user_id]["dice_won"]) + bet
         bot.send_message(message.chat.id, text='Неудача. Ты проиграл' + bet + ' очков.')
         bot.send_message(message.chat.id, text='Твой баланс: ' + database[user_id]["balance"] + ' очков.')
     else:
