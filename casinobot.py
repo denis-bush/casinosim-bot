@@ -65,6 +65,8 @@ def dicePlay(message):
     die2 = random.randint(0, 5)
     die3 = random.randint(0, 5)
     die4 = random.randint(0, 5)
+    user_id = message.from_user.id
+    
     bot.send_message(message.chat.id, text='Бросок...', reply_markup=telebot.types.ReplyKeyboardRemove())
     sleep(1)
     bot.send_message(message.chat.id, text= str(database[user_id]["name"]) + ': ' + dieFaces[die1] + dieFaces[die2]
