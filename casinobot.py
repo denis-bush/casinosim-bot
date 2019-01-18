@@ -23,7 +23,7 @@ def registerUser(message):
     user_id = message.from_user.id
     username = message.text
     bot.send_message(message.chat.id, username + '? Хорошо, я запомнил!')
-    database[user_id] = {"balance": 1000, 'dice_won': 0, 'dice_lost': 0}
+    database[user_id] = {"name": username,"balance": 1000, 'dice_won': 0, 'dice_lost': 0}
     sleep(1)
     bot.send_message(message.chat.id, str(username) + ', твой стартовый баланс: ' + str(database[user_id]['balance']))
     mainMenu(message)
@@ -51,10 +51,11 @@ def diceStart(message):
 def slotStart(message):
     bot.send_message(message.chat.id, text='Слоты')
 
+
 @bot.message_handler(func=lambda message: message.text == 'Статистика профиля' and message.content_type == 'text')
 def printStats(message):
-    bot.send_message(message.chat.id, text=database[message.from_user.id])
-
+    user_id = message.from_user.id
+    bot.send_message(message.chat.id, text='Имя игрока: ' + database[user_id]["name"])
 
 
 @bot.message_handler(func=lambda message: message.text == 'Справка' and message.content_type == 'text')
