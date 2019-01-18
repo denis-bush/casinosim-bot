@@ -100,12 +100,12 @@ def dicePlay(message, bet):
         database[user_id]["balance"] = int(database[user_id]["balance"]) + int(bet)
         database[user_id]["dice_won"] = int(database[user_id]["dice_won"]) + int(bet)
         bot.send_message(message.chat.id, text='Поздравляю! Ты выиграл ' + bet + ' очков!')
-        bot.send_message(message.chat.id, text='Твой баланс: ' + database[user_id]["balance"] + ' очков.')
+        bot.send_message(message.chat.id, text='Твой баланс: ' + str(database[user_id]["balance"]) + ' очков.')
     elif diesum1 < diesum2:
         database[user_id]["balance"] = int(database[user_id]["balance"]) - int(bet)
         database[user_id]["dice_lost"] = int(database[user_id]["dice_won"]) + bet
         bot.send_message(message.chat.id, text='Неудача. Ты проиграл' + bet + ' очков.')
-        bot.send_message(message.chat.id, text='Твой баланс: ' + database[user_id]["balance"] + ' очков.')
+        bot.send_message(message.chat.id, text='Твой баланс: ' + str(database[user_id]["balance"]) + ' очков.')
     else:
         bot.send_message(message.chat.id, text='Ничья.')
     keyboard = telebot.types.ReplyKeyboardMarkup(row_width=2, resize_keyboard=True)
