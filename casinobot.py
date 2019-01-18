@@ -27,7 +27,7 @@ def registerUser(message):
     bot.send_message(message.chat.id, username + '? Хорошо, я запомнил!')
     # Внесение в БД и вызов главного меню
     database[user_id] = {"name": username, "balance": 1000, 'dice_won': 0, 'dice_lost': 0}
-    sleep(0.5)
+    sleep(1)
     bot.send_message(message.chat.id, str(username) + ', твой стартовый баланс: ' + str(database[user_id]['balance']))
     sleep(0.5)
     mainMenu(message)
@@ -79,7 +79,7 @@ def helpMenu(message):
 # Удаление текущего пользователя
 @bot.message_handler(func=lambda message: message.text == 'Сброс данных' and message.content_type == 'text')
 def resetBot(message):
-    keyboard = telebot.types.ReplyKeyboardMarkup(row_width=2)
+    keyboard = telebot.types.ReplyKeyboardMarkup(row_width=2, resize_keyboard=True)
     b_yes = telebot.types.KeyboardButton(text='Да, удалить мой профиль')
     b_no = telebot.types.KeyboardButton(text='Нет, я передумал')
     keyboard.row(b_yes, b_no)
@@ -89,7 +89,8 @@ def resetBot(message):
 
 @bot.message_handler(func=lambda message: message.text == 'Да, удалить мой профиль' and message.content_type == 'text')
 def resetConfirm(message):
-    bot.send_message(message.chat.id, text='Принято, удаляю данные из базы...')
+    bot.send_message(message.chat.id, text='Принято, удаляю данные из базы...',
+                     reply_markup=telebot.types.ReplyKeyboardRemove())
     database.pop(message.from_user.id)
 
 
