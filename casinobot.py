@@ -103,7 +103,7 @@ def dicePlay(message, bet):
         bot.send_message(message.chat.id, text='Твой баланс: ' + str(database[user_id]["balance"]) + ' очков.')
     elif diesum1 < diesum2:
         database[user_id]["balance"] = int(database[user_id]["balance"]) - int(bet)
-        database[user_id]["dice_lost"] = int(database[user_id]["dice_won"]) + bet
+        database[user_id]["dice_lost"] = int(database[user_id]["dice_won"]) + int(bet)
         bot.send_message(message.chat.id, text='Неудача. Ты проиграл' + bet + ' очков.')
         bot.send_message(message.chat.id, text='Твой баланс: ' + str(database[user_id]["balance"]) + ' очков.')
     else:
