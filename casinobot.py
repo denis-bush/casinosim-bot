@@ -3,7 +3,6 @@ import os
 from time import sleep
 
 import telebot
-import emoji
 
 # Инициализируем базу данных в виде словаря
 database = {}
@@ -61,10 +60,10 @@ def diceStart(message):
 # Кости
 @bot.message_handler(func=lambda message: message.text == 'Начать игру в "Кости"' and message.content_type == 'text')
 def dicePlay(message):
-    diceSides = [":one:", ":two:", ":three:", ":four:", ":five:", ":six:"]
+    diceFaces = ["⚀", "⚁", "⚂", "⚃", "⚄", "⚅"]
     bot.send_message(message.chat.id, text='Бросок...', reply_markup=telebot.types.ReplyKeyboardRemove())
     sleep(1)
-    bot.send_message(message.chat.id, text='Выпало: ' + emoji.emojize(diceSides[4]) + emoji.emojize(diceSides[5]))
+    bot.send_message(message.chat.id, text='Выпало: ' + diceFaces[2] + diceFaces[4])
     sleep(1)
     keyboard = telebot.types.ReplyKeyboardMarkup(row_width=2, resize_keyboard=True)
     b_again = telebot.types.KeyboardButton(text='Ещё раз')
