@@ -55,7 +55,10 @@ def slotStart(message):
 @bot.message_handler(func=lambda message: message.text == 'Статистика профиля' and message.content_type == 'text')
 def printStats(message):
     user_id = message.from_user.id
-    bot.send_message(message.chat.id, text='Имя игрока: ' + str(database[user_id]["name"]))
+    bot.send_message(message.chat.id, text='Имя игрока: ' + str(database[user_id]["name"]) + "\n" +
+                     "Баланс: " + str(database[user_id]["balance"]) + "\n" +
+                     'Побед в "Кости": ' + str(database[user_id]["dice_won"]) + "\n" +
+                     'Поражений в "Кости": ' + str(database[user_id]["dice_lost"]))
 
 
 @bot.message_handler(func=lambda message: message.text == 'Справка' and message.content_type == 'text')
