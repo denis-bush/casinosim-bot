@@ -26,7 +26,7 @@ def registerUser(message):
     username = message.text
     bot.send_message(message.chat.id, username + '? Хорошо, я запомнил!')
     # Внесение в БД и вызов главного меню
-    database[user_id] = {'name': username, 'balance': 1000, 'dice_won': 0, 'dice_lost': 0}
+    database[user_id] = {'name': username, 'balance': 1000, 'bet': 0, 'dice_won': 0, 'dice_lost': 0}
     sleep(1)
     bot.send_message(message.chat.id, str(username) + ', твой стартовый баланс: ' +
                      str(database[user_id]['balance']) + ' очков')
@@ -71,14 +71,14 @@ def diceSetBet(message):
     if not str.isdigit(bet):
         bot.send_message(message.chat.id, text='Это неккорректное значение, попробуй ещё раз')
         diceAskBet
-    elif 0 < int(bet) < 101:
+    elif int(bet) < 0 or int(bet) > 101:
         bot.send_message(message.chat.id, text='Это неккорректное значение, попробуй ещё раз')
         diceAskBet
     else:
-        dicePlay(message, bet)
+        dicePlay(message)
 
 
-def dicePlay(message, bet):
+def dicePlay(message):
     die_faces = ["⚀", "⚁", "⚂", "⚃", "⚄", "⚅"]
     die1 = random.randint(0, 5)
     die2 = random.randint(0, 5)
@@ -97,14 +97,14 @@ def dicePlay(message, bet):
 
     # Проверяем результат и зачисляем или снимаем очки
     if diesum1 > diesum2:
-        database[user_id]["balance"] = int(database[user_id]["balance"]) + int(bet)
-        database[user_id]["dice_won"] = int(database[user_id]["dice_won"]) + int(bet)
-        bot.send_message(message.chat.id, text='Поздравляю! Ты выиграл ' + bet + ' очков!')
+        database[user_id]["balance"] = int(database[user_id]["balance"]) + int(database[user_id]['bet'])
+        database[user_id]["dice_won"] = int(database[user_id]["dice_won"]) + int(database[user_id]['bet'])
+        bot.send_message(message.chat.id, text='Поздравляю! Ты выиграл ' + database[user_id]['bet'] + ' очков!')
         bot.send_message(message.chat.id, text='Твой баланс: ' + str(database[user_id]["balance"]) + ' очков.')
     elif diesum1 < diesum2:
-        database[user_id]["balance"] = int(database[user_id]["balance"]) - int(bet)
-        database[user_id]["dice_lost"] = int(database[user_id]["dice_won"]) + int(bet)
-        bot.send_message(message.chat.id, text='Неудача. Ты проиграл' + bet + ' очков.')
+        database[user_id]["balance"] = int(database[user_id]["balance"]) - int(database[user_id]['bet'])
+        database[user_id]["dice_lost"] = int(database[user_id]["dice_won"]) + int(database[user_id]['bet'])
+        bot.send_message(message.chat.id, text='Неудача. Ты проиграл' + database[user_id]['bet'] + ' очков.')
         bot.send_message(message.chat.id, text='Твой баланс: ' + str(database[user_id]["balance"]) + ' очков.')
     else:
         bot.send_message(message.chat.id, text='Ничья.')
@@ -116,8 +116,8 @@ def dicePlay(message, bet):
 
 
 @bot.message_handler(func=lambda message: message.text == 'Ещё раз' and message.content_type == 'text')
-def diceAgain(message, bet):
-    dicePlay(message, bet)
+def diceAgain(message):
+    dicePlay(message)
 
 
 @bot.message_handler(func=lambda message: message.text == 'Закончить' and message.content_type == 'text')
