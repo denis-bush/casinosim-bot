@@ -4,7 +4,7 @@ from time import sleep
 
 import telebot
 
-# Инициализируем базу данных в виде словаря
+# Инициализируем базу данных в виде словаря и промежуточный счётчик очков
 database = {}
 # token = os.getenv("token")
 bot = telebot.TeleBot("631046420:AAHgOJwxSO8g1-hN9boIJYOC-nPEWKN-mDc")
@@ -26,7 +26,7 @@ def registerUser(message):
     username = message.text
     bot.send_message(message.chat.id, username + '? Хорошо, я запомнил!')
     # Внесение в БД и вызов главного меню
-    database[user_id] = {"name": username, "balance": 1000, 'dice_won': 0, 'dice_lost': 0}
+    database[user_id] = {'name': username, 'balance': 1000, 'score': 0, 'dice_won': 0, 'dice_lost': 0}
     sleep(1)
     bot.send_message(message.chat.id, str(username) + ', твой стартовый баланс: ' + str(database[user_id]['balance']))
     sleep(0.5)
@@ -60,10 +60,15 @@ def diceStart(message):
 # Кости
 @bot.message_handler(func=lambda message: message.text == 'Начать игру в "Кости"' and message.content_type == 'text')
 def dicePlay(message):
-    diceFaces = ["⚀", "⚁", "⚂", "⚃", "⚄", "⚅"]
+    dieFaces = ["⚀", "⚁", "⚂", "⚃", "⚄", "⚅"]
+    die1 = random.randint(0, 5)
+    die2 = random.randint(0, 5)
+    die3 = random.randint(0, 5)
+    die4 = random.randint(0, 5)
     bot.send_message(message.chat.id, text='Бросок...', reply_markup=telebot.types.ReplyKeyboardRemove())
     sleep(1)
-    bot.send_message(message.chat.id, text='Выпало: ' + diceFaces[2] + diceFaces[4])
+    bot.send_message(message.chat.id, text= str(database[user_id]["name"]) + ': ' + dieFaces[die1] + dieFaces[die2]
+                                            + '\n' + 'Бот: ' + dieFaces[die3] + dieFaces[die4])
     sleep(1)
     keyboard = telebot.types.ReplyKeyboardMarkup(row_width=2, resize_keyboard=True)
     b_again = telebot.types.KeyboardButton(text='Ещё раз')
