@@ -4,7 +4,7 @@ from time import sleep
 
 import telebot
 
-# Инициализируем базу данных в виде словаря и промежуточный счётчик очков
+# Инициализируем базу данных в виде словаря
 database = {}
 # token = os.getenv("token")
 bot = telebot.TeleBot("631046420:AAHgOJwxSO8g1-hN9boIJYOC-nPEWKN-mDc")
@@ -26,9 +26,10 @@ def registerUser(message):
     username = message.text
     bot.send_message(message.chat.id, username + '? Хорошо, я запомнил!')
     # Внесение в БД и вызов главного меню
-    database[user_id] = {'name': username, 'balance': 1000, 'score': 0, 'dice_won': 0, 'dice_lost': 0}
+    database[user_id] = {'name': username, 'balance': 1000, 'dice_won': 0, 'dice_lost': 0}
     sleep(1)
-    bot.send_message(message.chat.id, str(username) + ', твой стартовый баланс: ' + str(database[user_id]['balance']))
+    bot.send_message(message.chat.id, str(username) + ', твой стартовый баланс: ' +
+                     str(database[user_id]['balance']) + ' очков')
     sleep(0.5)
     mainMenu(message)
 
@@ -59,19 +60,49 @@ def diceStart(message):
 
 # Кости
 @bot.message_handler(func=lambda message: message.text == 'Начать игру в "Кости"' and message.content_type == 'text')
-def dicePlay(message):
-    dieFaces = ["⚀", "⚁", "⚂", "⚃", "⚄", "⚅"]
+def diceBet(message):
+    while True:
+        try:
+            bot.send_message(message.chat.id, text='Выбери свою ставку (макс. ставка - 100 очков)',
+                             reply_markup=telebot.types.ReplyKeyboardRemove())
+            bet = int(message.text)
+        except ValueError:
+            bot.send_message(message.chat.id, text='Это неккорректное значение, попробуй ещё раз')
+            continue
+        else:
+            if 0 < bet < 101:
+                dicePlay(message, bet)
+
+def dicePlay(message, bet):
+    die_faces = ["⚀", "⚁", "⚂", "⚃", "⚄", "⚅"]
     die1 = random.randint(0, 5)
     die2 = random.randint(0, 5)
     die3 = random.randint(0, 5)
     die4 = random.randint(0, 5)
+    diesum1 = die1 + die2
+    diesum2 = die3 + die4
     user_id = message.from_user.id
-    
+
+    # Бросаем кости
     bot.send_message(message.chat.id, text='Бросок...', reply_markup=telebot.types.ReplyKeyboardRemove())
     sleep(1)
-    bot.send_message(message.chat.id, text= str(database[user_id]["name"]) + ': ' + dieFaces[die1] + dieFaces[die2]
-                                            + '\n' + 'Бот: ' + dieFaces[die3] + dieFaces[die4])
-    sleep(1)
+    bot.send_message(message.chat.id, text= str(database[user_id]["name"]) + ': ' + die_faces[die1] + die_faces[die2]
+                                            + '\n' + 'Бот: ' + die_faces[die3] + die_faces[die4])
+    sleep(0.5)
+
+    # Проверяем результат и зачисляем или снимаем очки
+    if diesum1 > diesum2:
+        database[user_id]["balance"] += bet
+        database[user_id]["dice_won"] += bet
+        bot.send_message(message.chat.id, text='Поздравляю! Ты выиграл ' + int(bet) + ' очков!')
+        bot.send_message(message.chat.id, text='Твой баланс: ' + database[user_id]["balance"] + ' очков.')
+    elif diesum1 < diesum2:
+        database[user_id]["balance"] -= bet
+        database[user_id]["dice_lost"] += bet
+        bot.send_message(message.chat.id, text='Неудача. Ты проиграл' + int(bet) + ' очков.')
+        bot.send_message(message.chat.id, text='Твой баланс: ' + database[user_id]["balance"] + ' очков.')
+    else:
+        bot.send_message(message.chat.id, text='Ничья.')
     keyboard = telebot.types.ReplyKeyboardMarkup(row_width=2, resize_keyboard=True)
     b_again = telebot.types.KeyboardButton(text='Ещё раз')
     b_stop = telebot.types.KeyboardButton(text='Закончить')
@@ -106,7 +137,7 @@ def slotStart(message):
 def printStats(message):
     user_id = message.from_user.id
     bot.send_message(message.chat.id, text='Имя игрока: ' + str(database[user_id]["name"]) + "\n" +
-                     "Баланс: " + str(database[user_id]["balance"]) + "\n" +
+                     "Баланс: " + str(database[user_id]["balance"]) + "\n" + ' очков' +
                      'Выиграно в "Кости": ' + str(database[user_id]["dice_won"]) + "\n" +
                      'Проиграно в "Кости": ' + str(database[user_id]["dice_lost"]))
 
