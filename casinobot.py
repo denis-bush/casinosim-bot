@@ -21,20 +21,19 @@ def startBot(message):
 
 
 # Регистрация нового пользователя
-@bot.message_handler(commands=['start'])
 def registerUser(message):
     user_id = message.from_user.id
     username = message.text
     bot.send_message(message.chat.id, username + '? Хорошо, я запомнил!')
     # Внесение в БД и вызов главного меню
-    database[user_id] = {"name": username,"balance": 1000, 'dice_won': 0, 'dice_lost': 0}
-    sleep(1)
+    database[user_id] = {"name": username, "balance": 1000, 'dice_won': 0, 'dice_lost': 0}
+    sleep(0.5)
     bot.send_message(message.chat.id, str(username) + ', твой стартовый баланс: ' + str(database[user_id]['balance']))
+    sleep(0.5)
     mainMenu(message)
 
 
 # Клавиатура главного меню
-@bot.message_handler(commands=['menu'])
 def mainMenu(message):
     keyboard = telebot.types.ReplyKeyboardMarkup(row_width=2)
     b_dice = telebot.types.KeyboardButton(text='Сыграть в "Кости"')
@@ -86,12 +85,17 @@ def resetBot(message):
     keyboard.row(b_yes, b_no)
     bot.send_message(message.chat.id, text='Внимание! Данное действие удалит твой профиль и все связанные '
                                            'с ним данные! Ты уверен, что хочешь продолжить?', reply_markup=keyboard)
-    reply = message.text
-    if reply == 'Да, удалить мой профиль':
-        bot.send_message(message.chat.id, text='Принято, удаляю данные из базы...')
-        database.pop(message.from_user.id)
-    else:
-        mainMenu(message)
+
+
+@bot.message_handler(func=lambda message: message.text == 'Да, удалить мой профиль' and message.content_type == 'text')
+def resetConfirm(message):
+    bot.send_message(message.chat.id, text='Принято, удаляю данные из базы...')
+    database.pop(message.from_user.id)
+
+
+@bot.message_handler(func=lambda message: message.text == 'Нет, я передумал' and message.content_type == 'text')
+def resetDeny(message):
+    mainMenu(message)
 
 
 @bot.message_handler(content_types=['text'])
