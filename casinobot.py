@@ -1,5 +1,5 @@
 import random
-import os
+# import os
 from time import sleep
 
 import telebot
@@ -14,10 +14,10 @@ bot = telebot.TeleBot("631046420:AAHgOJwxSO8g1-hN9boIJYOC-nPEWKN-mDc")
 @bot.message_handler(commands=['start'])
 def startBot(message):
     if message.from_user.id not in database.keys():
-        bot.send_message(message.chat.id, 'Привет! Я - бот, симулятор казино! Как к тебе можно обращаться?')
+        bot.send_message(message.chat.id, 'Привет! Я - бот, симулятор казино! Как к Вам можно обращаться?')
         bot.register_next_step_handler(message, registerUser)
     else:
-        bot.send_message(message.chat.id, 'Ты уже зарегистрировался!')
+        bot.send_message(message.chat.id, 'Вы уже зарегистрированы!')
 
 
 # Регистрация нового пользователя
@@ -26,9 +26,9 @@ def registerUser(message):
     username = message.text
     bot.send_message(message.chat.id, username + '? Хорошо, я запомнил!')
     # Внесение в БД и вызов главного меню
-    database[user_id] = {'name': username, 'balance': 1000, 'bet': 0, 'score'': 0 'dice_won': 0, 'dice_lost': 0}
+    database[user_id] = {'name': username, 'balance': 1000, 'bet': 0, 'score': 0, 'dice_won': 0, 'dice_lost': 0}
     sleep(0.5)
-    bot.send_message(message.chat.id, str(username) + ', твой стартовый баланс: ' +
+    bot.send_message(message.chat.id, str(username) + ', Ваш стартовый баланс: ' +
                      str(database[user_id]['balance']) + ' очков')
     sleep(0.5)
     mainMenu(message)
@@ -61,7 +61,7 @@ def diceStart(message):
 # Кости
 @bot.message_handler(func=lambda message: message.text == 'Начать игру в "Кости"' and message.content_type == 'text')
 def diceAskBet(message):
-    bot.send_message(message.chat.id, text='Выбери свою ставку (макс. ставка - 100 очков)',
+    bot.send_message(message.chat.id, text='Выберите свою ставку (макс. ставка - 100 очков)',
                      reply_markup=telebot.types.ReplyKeyboardRemove())
     bot.register_next_step_handler(message, diceSetBet)
 
@@ -69,11 +69,11 @@ def diceAskBet(message):
 def diceSetBet(message):
     bet = message.text
     if not str.isdigit(bet):
-        bot.send_message(message.chat.id, text='Это неккорректное значение, попробуй ещё раз')
-        diceAskBet
+        bot.send_message(message.chat.id, text='Неккорректное значение, попробуйте ещё раз')
+        diceAskBet(message)
     elif int(bet) < 0 or int(bet) > 101:
-        bot.send_message(message.chat.id, text='Это неккорректное значение, попробуй ещё раз')
-        diceAskBet
+        bot.send_message(message.chat.id, text='Неккорректное значение, попробуйте ещё раз')
+        diceAskBet(message)
     else:
         database[message.from_user.id]["bet"] = int(bet)
         dicePlay(message)
@@ -100,15 +100,15 @@ def dicePlay(message):
     if diesum1 > diesum2:
         database[user_id]['balance'] += database[user_id]['bet']
         database[user_id]['score'] += + database[user_id]['bet']
-        bot.send_message(message.chat.id, text='Поздравляю! Ты выиграл ' + str(database[user_id]['bet']) + ' очков!')
+        bot.send_message(message.chat.id, text='Поздравляю! Вы выиграли ' + str(database[user_id]['bet']) + ' очков!')
         sleep(0.5)
-        bot.send_message(message.chat.id, text='Твой баланс: ' + str(database[user_id]["balance"]) + ' очков.')
+        bot.send_message(message.chat.id, text='Ваш баланс: ' + str(database[user_id]["balance"]) + ' очков.')
     elif diesum1 < diesum2:
         database[user_id]['balance'] -= database[user_id]['bet']
         database[user_id]['score'] -= database[user_id]['bet']
-        bot.send_message(message.chat.id, text='Неудача. Ты проиграл ' + str(database[user_id]['bet']) + ' очков.')
+        bot.send_message(message.chat.id, text='Неудача. Вы проиграли ' + str(database[user_id]['bet']) + ' очков.')
         sleep(0.5)
-        bot.send_message(message.chat.id, text='Твой баланс: ' + str(database[user_id]['balance']) + ' очков.')
+        bot.send_message(message.chat.id, text='Ваш баланс: ' + str(database[user_id]['balance']) + ' очков.')
     else:
         bot.send_message(message.chat.id, text='Ничья.')
     keyboard = telebot.types.ReplyKeyboardMarkup(row_width=2, resize_keyboard=True)
@@ -116,7 +116,7 @@ def dicePlay(message):
     b_stop = telebot.types.KeyboardButton(text='Закончить')
     keyboard.row(b_again, b_stop)
     sleep(0.5)
-    bot.send_message(message.chat.id, text='Ещё раз?', reply_markup=keyboard)
+    bot.send_message(message.chat.id, text='Сыграем ещё?', reply_markup=keyboard)
 
 
 @bot.message_handler(func=lambda message: message.text == 'Ещё раз' and message.content_type == 'text')
@@ -130,10 +130,10 @@ def diceStop(message):
     score = database[user_id]['score']
     if score >= 0:
         database[user_id]['dice_won'] += score
-        bot.send_message(message.chat.id, text='Ты выиграл ' + str(score) + ' очков')
+        bot.send_message(message.chat.id, text='Вы выиграли ' + str(score) + ' очков')
     else:
         database[user_id]['dice_lost'] += score
-        bot.send_message(message.chat.id, text='Ты проиграл ' + str(score) + ' очков')
+        bot.send_message(message.chat.id, text='Вы проиграли ' + str(score) + ' очков')
     database[user_id]['score'] = 0
     mainMenu(message)
 
@@ -172,8 +172,8 @@ def resetBot(message):
     b_yes = telebot.types.KeyboardButton(text='Да, удалить мой профиль')
     b_no = telebot.types.KeyboardButton(text='Нет, я передумал')
     keyboard.row(b_yes, b_no)
-    bot.send_message(message.chat.id, text='Внимание! Данное действие удалит твой профиль и все связанные '
-                                           'с ним данные! Ты уверен, что хочешь продолжить?', reply_markup=keyboard)
+    bot.send_message(message.chat.id, text='Внимание! Данное действие удалит Ваш профиль и все связанные '
+                                           'с ним данные! Вы уверены, что хотите продолжить?', reply_markup=keyboard)
 
 
 # Удаление пользователя
@@ -195,7 +195,7 @@ def textHandler(message):
    user_id = message.from_user.id
    if user_id not in database.keys():
        return bot.send_message(message.chat.id,
-                               text="Пожалуйста, зарегистрируйся с помощью команды /start")
+                               text="Пожалуйста, зарегистрируйтесь с помощью команды /start")
    text = message.text.lower()
 
    if text == "привет":
@@ -204,7 +204,7 @@ def textHandler(message):
        bot.send_message(message.chat.id, text='До встречи!')
    else:
        bot.send_message(message.chat.id,
-                        text='Прости, я тебя не понимаю. Попробуй выбрать команду из меню.')
+                        text='Простите, я Вас не понимаю. Попробуйте выбрать команду из меню.')
        mainMenu(message)
 
 
