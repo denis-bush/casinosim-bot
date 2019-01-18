@@ -60,19 +60,33 @@ def diceStart(message):
 
 # Кости
 @bot.message_handler(func=lambda message: message.text == 'Начать игру в "Кости"' and message.content_type == 'text')
-def diceBet(message):
-    bet = 0
+def diceAskBet(message):
     bot.send_message(message.chat.id, text='Выбери свою ставку (макс. ставка - 100 очков)',
                      reply_markup=telebot.types.ReplyKeyboardRemove())
+    bot.register_next_step_handler(message, diceSetBet)
     for i in range(5):
         try:
             bet = int(message.text)
         except ValueError:
-            bot.send_message(message.chat.id, text='Это неккорректное значение, попробуй ещё раз')
+
             continue
         else:
             if 0 < bet < 101:
                 dicePlay(message, bet)
+
+
+def diceSetBet(message):
+    bet = message.text
+    if not str.isdigit(bet):
+        bot.send_message(message.chat.id, text='Это неккорректное значение, попробуй ещё раз')
+        diceAskBet
+    elif 0 < int(bet) < 101:
+        bot.send_message(message.chat.id, text='Это неккорректное значение, попробуй ещё раз')
+        diceAskBet
+    else:
+        bet = int(bet)
+        dicePlay(message, bet)
+
 
 def dicePlay(message, bet):
     die_faces = ["⚀", "⚁", "⚂", "⚃", "⚄", "⚅"]
