@@ -27,7 +27,7 @@ def registerUser(message):
     bot.send_message(message.chat.id, username + '? Хорошо, я запомнил!')
     # Внесение в БД и вызов главного меню
     database[user_id] = {'name': username, 'balance': 1000, 'bet': 0, 'dice_won': 0, 'dice_lost': 0}
-    sleep(1)
+    sleep(0.5)
     bot.send_message(message.chat.id, str(username) + ', твой стартовый баланс: ' +
                      str(database[user_id]['balance']) + ' очков')
     sleep(0.5)
@@ -104,7 +104,7 @@ def dicePlay(message):
     elif diesum1 < diesum2:
         database[user_id]["balance"] = int(database[user_id]["balance"]) - int(database[user_id]['bet'])
         database[user_id]["dice_lost"] = int(database[user_id]["dice_won"]) + int(database[user_id]['bet'])
-        bot.send_message(message.chat.id, text='Неудача. Ты проиграл' + database[user_id]['bet'] + ' очков.')
+        bot.send_message(message.chat.id, text='Неудача. Ты проиграл' + str(database[user_id]['bet']) + ' очков.')
         bot.send_message(message.chat.id, text='Твой баланс: ' + str(database[user_id]["balance"]) + ' очков.')
     else:
         bot.send_message(message.chat.id, text='Ничья.')
