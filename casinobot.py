@@ -61,10 +61,11 @@ def diceStart(message):
 # Кости
 @bot.message_handler(func=lambda message: message.text == 'Начать игру в "Кости"' and message.content_type == 'text')
 def diceBet(message):
-    while True:
+    bet = 0
+    bot.send_message(message.chat.id, text='Выбери свою ставку (макс. ставка - 100 очков)',
+                     reply_markup=telebot.types.ReplyKeyboardRemove())
+    for i in range(5):
         try:
-            bot.send_message(message.chat.id, text='Выбери свою ставку (макс. ставка - 100 очков)',
-                             reply_markup=telebot.types.ReplyKeyboardRemove())
             bet = int(message.text)
         except ValueError:
             bot.send_message(message.chat.id, text='Это неккорректное значение, попробуй ещё раз')
@@ -137,7 +138,7 @@ def slotStart(message):
 def printStats(message):
     user_id = message.from_user.id
     bot.send_message(message.chat.id, text='Имя игрока: ' + str(database[user_id]["name"]) + "\n" +
-                     "Баланс: " + str(database[user_id]["balance"]) + "\n" + ' очков' +
+                     "Баланс: " + str(database[user_id]["balance"]) + ' очков' + "\n" +
                      'Выиграно в "Кости": ' + str(database[user_id]["dice_won"]) + "\n" +
                      'Проиграно в "Кости": ' + str(database[user_id]["dice_lost"]))
 
