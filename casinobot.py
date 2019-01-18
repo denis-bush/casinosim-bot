@@ -50,8 +50,39 @@ def mainMenu(message):
 # Запуск игры в "Кости"
 @bot.message_handler(func=lambda message: message.text == 'Сыграть в "Кости"' and message.content_type == 'text')
 def diceStart(message):
-    keyboard = telebot.types.ReplyKeyboardMarkup(row_width=2)
+    keyboard = telebot.types.ReplyKeyboardMarkup(row_width=2, resize_keyboard=True)
+    b_start = telebot.types.KeyboardButton(text='Начать игру в "Кости"')
+    b_back = telebot.types.KeyboardButton(text='Вернуться в главное меню')
+    keyboard.row(b_start, b_back)
     bot.send_message(message.chat.id, text='Добро пожаловать в игру кости!', reply_markup=keyboard)
+
+
+# Кости
+@bot.message_handler(func=lambda message: message.text == 'Начать игру в "Кости"' and message.content_type == 'text')
+def dicePlay(message):
+    bot.send_message(message.chat.id, text='Бросок...', reply_markup=telebot.types.ReplyKeyboardRemove())
+    sleep(1)
+    keyboard = telebot.types.ReplyKeyboardMarkup(row_width=2, resize_keyboard=True)
+    b_again = telebot.types.KeyboardButton(text='Ещё раз')
+    b_stop = telebot.types.KeyboardButton(text='Закончить')
+    keyboard.row(b_again, b_stop)
+    bot.send_message(message.chat.id, text='Ещё раз?', reply_markup=keyboard)
+
+
+@bot.message_handler(func=lambda message: message.text == 'Ещё раз' and message.content_type == 'text')
+def diceAgain(message):
+    dicePlay(message)
+
+
+@bot.message_handler(func=lambda message: message.text == 'Закончить' and message.content_type == 'text')
+def diceStop(message):
+    bot.send_message(message.chat.id, text='Вы выиграли 0')
+    mainMenu(message)
+
+# Возврат в главное меню
+@bot.message_handler(func=lambda message: message.text == 'Вернуться в главное меню' and message.content_type == 'text')
+def backToMenu(message):
+    mainMenu(message)
 
 
 # Запуск игры в слот-машину
@@ -66,8 +97,8 @@ def printStats(message):
     user_id = message.from_user.id
     bot.send_message(message.chat.id, text='Имя игрока: ' + str(database[user_id]["name"]) + "\n" +
                      "Баланс: " + str(database[user_id]["balance"]) + "\n" +
-                     'Побед в "Кости": ' + str(database[user_id]["dice_won"]) + "\n" +
-                     'Поражений в "Кости": ' + str(database[user_id]["dice_lost"]))
+                     'Выиграно в "Кости": ' + str(database[user_id]["dice_won"]) + "\n" +
+                     'Проиграно в "Кости": ' + str(database[user_id]["dice_lost"]))
 
 
 # Вывод справочной информации
@@ -76,7 +107,7 @@ def helpMenu(message):
     bot.send_message(message.chat.id, text='Справка')
 
 
-# Удаление текущего пользователя
+# Запрос удаления текущего пользователя
 @bot.message_handler(func=lambda message: message.text == 'Сброс данных' and message.content_type == 'text')
 def resetBot(message):
     keyboard = telebot.types.ReplyKeyboardMarkup(row_width=2, resize_keyboard=True)
@@ -87,6 +118,7 @@ def resetBot(message):
                                            'с ним данные! Ты уверен, что хочешь продолжить?', reply_markup=keyboard)
 
 
+# Удаление пользователя
 @bot.message_handler(func=lambda message: message.text == 'Да, удалить мой профиль' and message.content_type == 'text')
 def resetConfirm(message):
     bot.send_message(message.chat.id, text='Принято, удаляю данные из базы...',
@@ -94,6 +126,7 @@ def resetConfirm(message):
     database.pop(message.from_user.id)
 
 
+# Отмена удаления
 @bot.message_handler(func=lambda message: message.text == 'Нет, я передумал' and message.content_type == 'text')
 def resetDeny(message):
     mainMenu(message)
