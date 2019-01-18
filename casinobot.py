@@ -98,14 +98,16 @@ def dicePlay(message):
 
     # Проверяем результат и зачисляем или снимаем очки
     if diesum1 > diesum2:
-        database[user_id]["balance"] = int(database[user_id]["balance"]) + database[user_id]['bet']
-        database[user_id]["dice_won"] = int(database[user_id]["dice_won"]) + database[user_id]['bet']
+        database[user_id]["balance"] = database[user_id]["balance"] + database[user_id]['bet']
+        database[user_id]["dice_won"] = database[user_id]["dice_won"] + database[user_id]['bet']
         bot.send_message(message.chat.id, text='Поздравляю! Ты выиграл ' + str(database[user_id]['bet']) + ' очков!')
+        sleep(0.5)
         bot.send_message(message.chat.id, text='Твой баланс: ' + str(database[user_id]["balance"]) + ' очков.')
     elif diesum1 < diesum2:
-        database[user_id]["balance"] = int(database[user_id]["balance"]) - database[user_id]['bet']
-        database[user_id]["dice_lost"] = int(database[user_id]["dice_won"]) + database[user_id]['bet']
+        database[user_id]["balance"] = database[user_id]["balance"] - database[user_id]['bet']
+        database[user_id]["dice_lost"] = database[user_id]["dice_won"] + database[user_id]['bet']
         bot.send_message(message.chat.id, text='Неудача. Ты проиграл ' + str(database[user_id]['bet']) + ' очков.')
+        sleep(0.5)
         bot.send_message(message.chat.id, text='Твой баланс: ' + str(database[user_id]["balance"]) + ' очков.')
     else:
         bot.send_message(message.chat.id, text='Ничья.')
@@ -113,6 +115,7 @@ def dicePlay(message):
     b_again = telebot.types.KeyboardButton(text='Ещё раз')
     b_stop = telebot.types.KeyboardButton(text='Закончить')
     keyboard.row(b_again, b_stop)
+    sleep(0.5)
     bot.send_message(message.chat.id, text='Ещё раз?', reply_markup=keyboard)
 
 
