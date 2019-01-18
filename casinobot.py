@@ -134,8 +134,7 @@ def diceStop(message):
     else:
         database[user_id]['dice_lost'] += score
         bot.send_message(message.chat.id, text='Ты проиграл ' + str(score) + ' очков')
-
-
+    database[user_id]['score'] = 0
     mainMenu(message)
 
 # Возврат в главное меню
