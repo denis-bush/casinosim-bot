@@ -64,15 +64,6 @@ def diceAskBet(message):
     bot.send_message(message.chat.id, text='Выбери свою ставку (макс. ставка - 100 очков)',
                      reply_markup=telebot.types.ReplyKeyboardRemove())
     bot.register_next_step_handler(message, diceSetBet)
-    for i in range(5):
-        try:
-            bet = int(message.text)
-        except ValueError:
-
-            continue
-        else:
-            if 0 < bet < 101:
-                dicePlay(message, bet)
 
 
 def diceSetBet(message):
@@ -84,7 +75,6 @@ def diceSetBet(message):
         bot.send_message(message.chat.id, text='Это неккорректное значение, попробуй ещё раз')
         diceAskBet
     else:
-        bet = int(bet)
         dicePlay(message, bet)
 
 
@@ -107,14 +97,14 @@ def dicePlay(message, bet):
 
     # Проверяем результат и зачисляем или снимаем очки
     if diesum1 > diesum2:
-        database[user_id]["balance"] += bet
-        database[user_id]["dice_won"] += bet
-        bot.send_message(message.chat.id, text='Поздравляю! Ты выиграл ' + int(bet) + ' очков!')
+        database[user_id]["balance"] += int(bet)
+        database[user_id]["dice_won"] += int(bet)
+        bot.send_message(message.chat.id, text='Поздравляю! Ты выиграл ' + bet + ' очков!')
         bot.send_message(message.chat.id, text='Твой баланс: ' + database[user_id]["balance"] + ' очков.')
     elif diesum1 < diesum2:
         database[user_id]["balance"] -= bet
         database[user_id]["dice_lost"] += bet
-        bot.send_message(message.chat.id, text='Неудача. Ты проиграл' + int(bet) + ' очков.')
+        bot.send_message(message.chat.id, text='Неудача. Ты проиграл' + bet + ' очков.')
         bot.send_message(message.chat.id, text='Твой баланс: ' + database[user_id]["balance"] + ' очков.')
     else:
         bot.send_message(message.chat.id, text='Ничья.')
