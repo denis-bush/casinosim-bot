@@ -71,7 +71,7 @@ def diceSetBet(message):
     if not str.isdigit(bet):
         bot.send_message(message.chat.id, text='Неккорректное значение, попробуйте ещё раз')
         diceAskBet(message)
-    elif int(bet) < 0 or int(bet) > 101:
+    elif int(bet) < 1 or int(bet) > 100:
         bot.send_message(message.chat.id, text='Неккорректное значение, попробуйте ещё раз')
         diceAskBet(message)
     else:
@@ -99,13 +99,13 @@ def dicePlay(message):
     # Проверяем результат и зачисляем или снимаем очки
     if diesum1 > diesum2:
         database[user_id]['balance'] += database[user_id]['bet']
-        database[user_id]['score'] += + database[user_id]['bet']
+        database[user_id]['score'] += database[user_id]['bet']
         bot.send_message(message.chat.id, text='Поздравляю! Вы выиграли ' + str(database[user_id]['bet']) + ' очков!')
         sleep(0.5)
         bot.send_message(message.chat.id, text='Ваш баланс: ' + str(database[user_id]["balance"]) + ' очков.')
     elif diesum1 < diesum2:
         database[user_id]['balance'] -= database[user_id]['bet']
-        database[user_id]['score'] -= database[user_id]['bet']
+        database[user_id]['score'] += database[user_id]['bet']
         bot.send_message(message.chat.id, text='Неудача. Вы проиграли ' + str(database[user_id]['bet']) + ' очков.')
         sleep(0.5)
         bot.send_message(message.chat.id, text='Ваш баланс: ' + str(database[user_id]['balance']) + ' очков.')
