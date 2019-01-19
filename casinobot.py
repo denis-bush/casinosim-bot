@@ -184,7 +184,7 @@ def printAbout(message):
 @bot.message_handler(func=lambda message: message.text == 'Законодательство РФ об азартных играх'
                                           and message.content_type == 'text')
 def printLaw(message):
-    from about import reply
+    from law import reply
     bot.send_message(message.chat.id, text=reply)
 
 
