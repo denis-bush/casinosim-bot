@@ -166,7 +166,7 @@ def printStats(message):
 # Вывод справочной информации
 @bot.message_handler(func=lambda message: message.text == 'Справка' and message.content_type == 'text')
 def helpMenu(message):
-    keyboard = telebot.types.ReplyKeyboardMarkup(row_width=2, resize_keyboard=True)
+    keyboard = telebot.types.ReplyKeyboardMarkup(row_width=2)
     b_about = telebot.types.KeyboardButton(text='О программе')
     b_law = telebot.types.KeyboardButton(text='Законодательство РФ об азартных играх')
     b_back = telebot.types.KeyboardButton(text='Вернуться в главное меню')
@@ -177,19 +177,15 @@ def helpMenu(message):
 
 @bot.message_handler(func=lambda message: message.text == 'О программе' and message.content_type == 'text')
 def printAbout(message):
-    txtfile = open('about.txt', 'r', encoding='ANSI')
-    reply = txtfile.read()
+    from about import reply
     bot.send_message(message.chat.id, text=reply)
-    txtfile.close()
 
 
 @bot.message_handler(func=lambda message: message.text == 'Законодательство РФ об азартных играх'
                                           and message.content_type == 'text')
 def printLaw(message):
-    txtfile = open('law.txt', 'r', encoding='ANSI')
-    reply = txtfile.read()
+    from about import reply
     bot.send_message(message.chat.id, text=reply)
-    txtfile.close()
 
 
 # Запрос удаления текущего пользователя

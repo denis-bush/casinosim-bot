@@ -2,7 +2,11 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="5de423e3-7a2b-43c5-9f2a-0ca2fd1d74e1" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/encodings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/encodings.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/about.txt" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/casinobot.py" beforeDir="false" afterPath="$PROJECT_DIR$/casinobot.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/law.txt" beforeDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -15,11 +19,29 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/casinobot.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="314">
-              <caret line="188" column="49" selection-start-line="188" selection-start-column="49" selection-end-line="188" selection-end-column="49" />
+            <state relative-caret-position="379">
+              <caret line="187" column="49" selection-start-line="187" selection-start-column="49" selection-end-line="187" selection-end-column="49" />
               <folding>
                 <element signature="e#0#13#0" expanded="true" />
               </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/pyTelegramBotAPI/law.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state>
+              <caret column="6" selection-start-column="6" selection-end-column="6" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/about.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state>
+              <caret column="30" selection-start-column="30" selection-end-column="30" />
             </state>
           </provider>
         </entry>
@@ -59,6 +81,7 @@
       <find>set</find>
       <find>setBe</find>
       <find>diceAskBet</find>
+      <find>enco</find>
     </findStrings>
     <replaceStrings>
       <replace>text=</replace>
@@ -82,6 +105,9 @@
       <list>
         <option value="$PROJECT_DIR$/requirements.txt" />
         <option value="$PROJECT_DIR$/dice.py" />
+        <option value="$PROJECT_DIR$/law.py" />
+        <option value="$PROJECT_DIR$/pyTelegramBotAPI/law.py" />
+        <option value="$PROJECT_DIR$/about.py" />
         <option value="$PROJECT_DIR$/casinobot.py" />
       </list>
     </option>
@@ -104,6 +130,11 @@
             <path>
               <item name="casinosim-bot" type="b2602c69:ProjectViewProjectNode" />
               <item name="casinosim-bot" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="casinosim-bot" type="b2602c69:ProjectViewProjectNode" />
+              <item name="casinosim-bot" type="462c0819:PsiDirectoryNode" />
+              <item name="pyTelegramBotAPI" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="casinosim-bot" type="b2602c69:ProjectViewProjectNode" />
@@ -253,10 +284,31 @@
     <entry file="file://$PROJECT_DIR$/dice.py">
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
+    <entry file="file://$PROJECT_DIR$/law.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="34">
+          <caret line="2" column="18" selection-end-line="2" selection-end-column="89" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/pyTelegramBotAPI/law.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state>
+          <caret column="6" selection-start-column="6" selection-end-column="6" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/about.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state>
+          <caret column="30" selection-start-column="30" selection-end-column="30" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/casinobot.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="314">
-          <caret line="188" column="49" selection-start-line="188" selection-start-column="49" selection-end-line="188" selection-end-column="49" />
+        <state relative-caret-position="379">
+          <caret line="187" column="49" selection-start-line="187" selection-start-column="49" selection-end-line="187" selection-end-column="49" />
           <folding>
             <element signature="e#0#13#0" expanded="true" />
           </folding>
