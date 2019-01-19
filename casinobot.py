@@ -134,7 +134,7 @@ def diceStop(message):
         bot.send_message(message.chat.id, text='Вы выиграли ' + str(score) + ' очков')
     else:
         database[user_id]['dice_lost'] += abs(score)
-        bot.send_message(message.chat.id, text='Вы проиграли ' + str(score) + ' очков')
+        bot.send_message(message.chat.id, text='Вы проиграли ' + str(abs(score)) + ' очков')
     database[user_id]['score'] = 0
     mainMenu(message)
 
@@ -166,7 +166,6 @@ def printStats(message):
 # Вывод справочной информации
 @bot.message_handler(func=lambda message: message.text == 'Справка' and message.content_type == 'text')
 def helpMenu(message):
-    bot.send_message(message.chat.id, text='Справка')
     keyboard = telebot.types.ReplyKeyboardMarkup(row_width=2, resize_keyboard=True)
     b_about = telebot.types.KeyboardButton(text='О программе')
     b_law = telebot.types.KeyboardButton(text='Законодательство РФ об азартных играх')
