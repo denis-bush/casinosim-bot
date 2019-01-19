@@ -108,11 +108,13 @@ def dicePlay(message):
 
     # Проверяем результат и зачисляем или снимаем очки
     if diesum1 > diesum2:
+        DATABASE[user_id]['balance'] += bet
         curr_score += bet
         bot.send_message(message.chat.id, text='Поздравляю! 🎉 Вы выиграли ' + str(bet) + ' очков!')
         sleep(0.5)
         bot.send_message(message.chat.id, text='💰 Ваш баланс: ' + str(DATABASE[user_id]['balance']) + ' очков.')
     elif diesum1 < diesum2:
+        DATABASE[user_id]['balance'] -= bet
         curr_score -= bet
         bot.send_message(message.chat.id, text='Неудача. 😔 Вы проиграли ' + str(bet) + ' очков.')
         sleep(0.5)
@@ -120,7 +122,6 @@ def dicePlay(message):
     else:
         curr_score = 0
         bot.send_message(message.chat.id, text='Ничья.')
-    DATABASE[user_id]['balance'] += curr_score
     DATABASE[user_id]['score'] += curr_score
 
     keyboard = telebot.types.ReplyKeyboardMarkup(row_width=2, resize_keyboard=True)
@@ -164,9 +165,16 @@ def slotStart(message):
     keyboard = telebot.types.ReplyKeyboardMarkup(row_width=2, resize_keyboard=True)
     b_start = telebot.types.KeyboardButton(text='Начать игру')
     b_back = telebot.types.KeyboardButton(text='🔙 Вернуться в главное меню')
+    b_table = telebot.types.KeyboardButton(text='📋 Таблица выигрышей')
     keyboard.row(b_start, b_back)
+    keyboard.row(b_table)
     bot.send_message(message.chat.id, text='Добро пожаловать в Слот-машину!', reply_markup=keyboard)
 
+
+@bot.message_handler(func=lambda message: message.text == '📋 Таблица выигрышей' and message.content_type == 'text')
+def slotTable(message):
+    from paytable import reply
+    bot.send_message(message.chat.id, text=reply)
 
 def slotPlay(message):
     user_id = message.from_user.id
@@ -250,10 +258,10 @@ def printStats(message):
     user_id = message.from_user.id
     bot.send_message(message.chat.id, text='👤 Имя игрока: ' + str(DATABASE[user_id]['name']) + '\n' +
                      '💰 Баланс: ' + str(DATABASE[user_id]['balance']) + ' очков' + '\n' +
-                     '🎲⬆ Выиграно в "Кости": ' + str(DATABASE[user_id]['dice_won']) + ' очков' + '\n' +
-                     '🎲⬇ Проиграно в "Кости": ' + str(DATABASE[user_id]['dice_lost']) + ' очков' + '\n' +
-                     '🎰⬆ Выиграно в Слот-машине: ' + str(DATABASE[user_id]['slot_won']) + ' очков' + '\n' +
-                     '🎰⬇ Проиграно в Слот-машине: ' + str(DATABASE[user_id]['slot_lost']) + ' очков')
+                     '🎲 Выиграно в "Кости": ' + str(DATABASE[user_id]['dice_won']) + ' очков' + '\n' +
+                     '🎲 Проиграно в "Кости": ' + str(DATABASE[user_id]['dice_lost']) + ' очков' + '\n' +
+                     '🎰 Выиграно в Слот-машине: ' + str(DATABASE[user_id]['slot_won']) + ' очков' + '\n' +
+                     '🎰 Проиграно в Слот-машине: ' + str(DATABASE[user_id]['slot_lost']) + ' очков')
 
 
 # Вывод справочной информации
