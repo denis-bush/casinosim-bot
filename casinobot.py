@@ -177,17 +177,19 @@ def helpMenu(message):
 
 @bot.message_handler(func=lambda message: message.text == 'О программе' and message.content_type == 'text')
 def printAbout(message):
-    txtfile = open('about.txt', 'r', encoding='utf-8')
+    txtfile = open('about.txt', 'r', encoding='ANSI')
     reply = txtfile.read()
     bot.send_message(message.chat.id, text=reply)
+    txtfile.close()
 
 
 @bot.message_handler(func=lambda message: message.text == 'Законодательство РФ об азартных играх'
                                           and message.content_type == 'text')
 def printLaw(message):
-    txtfile = open('law.txt', 'r', encoding='utf-8')
+    txtfile = open('law.txt', 'r', encoding='ANSI')
     reply = txtfile.read()
     bot.send_message(message.chat.id, text=reply)
+    txtfile.close()
 
 
 # Запрос удаления текущего пользователя
