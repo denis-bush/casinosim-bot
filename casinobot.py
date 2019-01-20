@@ -109,12 +109,14 @@ def dicePlay(message):
     # Проверяем результат и зачисляем или снимаем очки
     if diesum1 > diesum2:
         DATABASE[user_id]['balance'] += bet
+        DATABASE[user_id]['dice_won'] += bet
         curr_score += bet
         bot.send_message(message.chat.id, text='Поздравляю! 🎉 Вы выиграли ' + str(bet) + ' очков!')
         sleep(0.5)
         bot.send_message(message.chat.id, text='💰 Ваш баланс: ' + str(DATABASE[user_id]['balance']) + ' очков.')
     elif diesum1 < diesum2:
         DATABASE[user_id]['balance'] -= bet
+        DATABASE[user_id]['dice_lost'] += bet
         curr_score -= bet
         bot.send_message(message.chat.id, text='Неудача. 😔 Вы проиграли ' + str(bet) + ' очков.')
         sleep(0.5)
@@ -142,10 +144,8 @@ def diceStop(message):
     user_id = message.from_user.id
     score = DATABASE[user_id]['score']
     if score >= 0:
-        DATABASE[user_id]['dice_won'] += score
         bot.send_message(message.chat.id, text='Вы выиграли ' + str(score) + ' очков')
     else:
-        DATABASE[user_id]['dice_lost'] += abs(score)
         bot.send_message(message.chat.id, text='Вы проиграли ' + str(abs(score)) + ' очков')
     DATABASE[user_id]['score'] = 0
     mainMenu(message)
@@ -214,10 +214,12 @@ def slotPlay(message):
     bot.send_message(message.chat.id, text=slot_line)
     sleep(0.5)
     if curr_score > 0:
+        DATABASE[user_id]['slot_won'] += curr_score
         bot.send_message(message.chat.id, text='Поздравляю! 🎉 Вы выиграли ' + curr_score + ' очков!')
         sleep(0.5)
         bot.send_message(message.chat.id, text='💰 Ваш баланс: ' + str(DATABASE[user_id]['balance']) + ' очков.')
     elif curr_score < 0:
+        DATABASE[user_id]['slot_lost'] += curr_score
         bot.send_message(message.chat.id, text='Ставка потеряна. 😔 Вы проиграли ' + str(bet) + ' очков.')
         sleep(0.5)
         bot.send_message(message.chat.id, text='💰 Ваш баланс: ' + str(DATABASE[user_id]['balance']) + ' очков.')
@@ -243,10 +245,8 @@ def slotStop(message):
     user_id = message.from_user.id
     score = DATABASE[user_id]['score']
     if score >= 0:
-        DATABASE[user_id]['slot_won'] += score
         bot.send_message(message.chat.id, text='Вы выиграли ' + str(score) + ' очков')
     else:
-        DATABASE[user_id]['slot_lost'] += abs(score)
         bot.send_message(message.chat.id, text='Вы проиграли ' + str(abs(score)) + ' очков')
     DATABASE[user_id]['score'] = 0
     mainMenu(message)
