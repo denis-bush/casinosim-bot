@@ -134,22 +134,25 @@ def dicePlay(message):
 
     # Ожидаем следующего хода
     keyboard = types.ReplyKeyboardMarkup(row_width=2, resize_keyboard=True)
-    b_again = types.KeyboardButton(text='Бросить ещё раз')
-    b_stop = types.KeyboardButton(text='Закончить игру в "Кости"')
+    b_again = types.KeyboardButton(text='Сыграть ещё раз')
+    b_stop = types.KeyboardButton(text='Закончить игру')
     keyboard.row(b_again, b_stop)
     sleep(0.5)
     bot.send_message(message.chat.id, text='Сыграем ещё?', reply_markup=keyboard)
 
 
 # Продолжение игры в "Кости"
-@bot.message_handler(func=lambda message: message.text == 'Бросить ещё раз' and message.content_type == 'text')
-def diceAgain(message):
-    dicePlay(message)
+@bot.message_handler(func=lambda message: message.text == 'Сыграть ещё раз' and message.content_type == 'text')
+def playAgain(message):
+    if DATABASE[message.from_user.id]['game_id'] == 1:
+        dicePlay(message)
+    elif DATABASE[message.from_user.id]['game_id'] == 2:
+        slotPlay(message)
 
 
-# Остановка игры в "Кости", проверка и вывод итогового результата
-@bot.message_handler(func=lambda message: message.text == 'Закончить игру в "Кости"' and message.content_type == 'text')
-def diceStop(message):
+# Остановка текущей игры, проверка и вывод итогового результата
+@bot.message_handler(func=lambda message: message.text == 'Закончить игру' and message.content_type == 'text')
+def gameOver(message):
     user_id = message.from_user.id
     score = DATABASE[user_id]['score']
     if score >= 0:
@@ -235,7 +238,7 @@ def slotPlay(message):
     sleep(0.5)
     if curr_score > 0:
         DATABASE[user_id]['slot_won'] += curr_score
-        bot.send_message(message.chat.id, text='Поздравляю! 🎉 Вы выиграли ' + curr_score + ' очков!')
+        bot.send_message(message.chat.id, text='Поздравляю! 🎉 Вы выиграли ' + str(curr_score) + ' очков!')
         sleep(0.5)
         bot.send_message(message.chat.id, text='💰 Ваш баланс: ' + str(DATABASE[user_id]['balance']) + ' очков.')
     elif curr_score < 0:
@@ -250,29 +253,10 @@ def slotPlay(message):
     # Ожидаем следующего хода
     keyboard = types.ReplyKeyboardMarkup(row_width=2, resize_keyboard=True)
     b_again = types.KeyboardButton(text='Сыграть ещё раз')
-    b_stop = types.KeyboardButton(text='Закончить игру в Слот-машину')
+    b_stop = types.KeyboardButton(text='Закончить игру')
     keyboard.row(b_again, b_stop)
     sleep(0.5)
     bot.send_message(message.chat.id, text='Сыграем ещё?', reply_markup=keyboard)
-
-
-# Продолжение игры в Слот-машину
-@bot.message_handler(func=lambda message: message.text == 'Сыграть ещё раз' and message.content_type == 'text')
-def slotAgain(message):
-    slotPlay(message)
-
-
-# Остановка игры в Слот-машину, проверка и вывод итогового результата
-@bot.message_handler(func=lambda message: message.text == 'Закончить игру в Слот-машину' and message.content_type == 'text')
-def slotStop(message):
-    user_id = message.from_user.id
-    score = DATABASE[user_id]['score']
-    if score >= 0:
-        bot.send_message(message.chat.id, text='Вы выиграли ' + str(score) + ' очков')
-    else:
-        bot.send_message(message.chat.id, text='Вы проиграли ' + str(abs(score)) + ' очков')
-    DATABASE[user_id]['score'] = 0
-    mainMenu(message)
 
 
 # Вывод статистики профиля

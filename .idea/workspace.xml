@@ -15,8 +15,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/casinobot.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1997">
-              <caret line="199" column="25" selection-start-line="199" selection-start-column="19" selection-end-line="199" selection-end-column="25" />
+            <state relative-caret-position="2228">
+              <caret line="335" column="93" lean-forward="true" selection-start-line="335" selection-start-column="93" selection-end-line="335" selection-end-column="93" />
               <folding>
                 <element signature="e#0#26#0" expanded="true" />
               </folding>
@@ -53,9 +53,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>start</find>
-      <find>вернут</find>
-      <find>сыграть в &quot;</find>
       <find>бросо</find>
       <find>спра</find>
       <find>сбро</find>
@@ -83,6 +80,9 @@
       <find>line</find>
       <find>выво</find>
       <find>(0, 5)</find>
+      <find>stop</find>
+      <find>game_id</find>
+      <find>again</find>
     </findStrings>
     <replaceStrings>
       <replace>text=</replace>
@@ -321,8 +321,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/casinobot.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1997">
-          <caret line="199" column="25" selection-start-line="199" selection-start-column="19" selection-end-line="199" selection-end-column="25" />
+        <state relative-caret-position="2228">
+          <caret line="335" column="93" lean-forward="true" selection-start-line="335" selection-start-column="93" selection-end-line="335" selection-end-column="93" />
           <folding>
             <element signature="e#0#26#0" expanded="true" />
           </folding>
