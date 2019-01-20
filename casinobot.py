@@ -214,7 +214,7 @@ def slotPlay(message):
     bot.send_message(message.chat.id, text=slot_line)
     sleep(0.5)
     if curr_score > 0:
-        bot.send_message(message.chat.id, text='Поздравляю! 🎉 Вы выиграли ' + str(bet) + ' очков!')
+        bot.send_message(message.chat.id, text='Поздравляю! 🎉 Вы выиграли ' + curr_score + ' очков!')
         sleep(0.5)
         bot.send_message(message.chat.id, text='💰 Ваш баланс: ' + str(DATABASE[user_id]['balance']) + ' очков.')
     elif curr_score < 0:
@@ -238,7 +238,7 @@ def slotAgain(message):
     slotPlay(message)
 
 
-@bot.message_handler(func=lambda message: message.text == 'Закончить игру в "Кости"' and message.content_type == 'text')
+@bot.message_handler(func=lambda message: message.text == 'Закончить игру в Слот-машину' and message.content_type == 'text')
 def slotStop(message):
     user_id = message.from_user.id
     score = DATABASE[user_id]['score']

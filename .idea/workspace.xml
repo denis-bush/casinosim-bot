@@ -2,9 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="5de423e3-7a2b-43c5-9f2a-0ca2fd1d74e1" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/about.py" beforeDir="false" afterPath="$PROJECT_DIR$/about.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/casinobot.py" beforeDir="false" afterPath="$PROJECT_DIR$/casinobot.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/law.py" beforeDir="false" afterPath="$PROJECT_DIR$/law.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/paytable.py" beforeDir="false" afterPath="$PROJECT_DIR$/paytable.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -17,8 +16,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/casinobot.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="382">
-              <caret line="176" column="49" selection-start-line="176" selection-start-column="49" selection-end-line="176" selection-end-column="49" />
+            <state relative-caret-position="39">
+              <caret line="229" column="54" selection-start-line="229" selection-start-column="48" selection-end-line="229" selection-end-column="54" />
               <folding>
                 <element signature="e#0#13#0" expanded="true" />
               </folding>
@@ -29,8 +28,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/paytable.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="34">
-              <caret line="2" column="86" selection-start-line="2" selection-start-column="86" selection-end-line="2" selection-end-column="86" />
+            <state relative-caret-position="136">
+              <caret line="8" column="12" selection-start-line="8" selection-start-column="12" selection-end-line="8" selection-end-column="12" />
             </state>
           </provider>
         </entry>
@@ -64,14 +63,11 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>diceAg</find>
-      <find>bet</find>
       <find>datab</find>
       <find>int(database[user_id]['bet'])</find>
       <find>&quot;</find>
       <find>&quot;Кости&quot;</find>
       <find>машин</find>
-      <find>законч</find>
       <find>set</find>
       <find>setBe</find>
       <find>diceAskBet</find>
@@ -94,6 +90,9 @@
       <find>DA</find>
       <find>score</find>
       <find>-</find>
+      <find>from la</find>
+      <find>Закончит</find>
+      <find>законч</find>
     </findStrings>
     <replaceStrings>
       <replace>text=</replace>
@@ -315,15 +314,15 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/paytable.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="34">
-          <caret line="2" column="86" selection-start-line="2" selection-start-column="86" selection-end-line="2" selection-end-column="86" />
+        <state relative-caret-position="136">
+          <caret line="8" column="12" selection-start-line="8" selection-start-column="12" selection-end-line="8" selection-end-column="12" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/casinobot.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="382">
-          <caret line="176" column="49" selection-start-line="176" selection-start-column="49" selection-end-line="176" selection-end-column="49" />
+        <state relative-caret-position="39">
+          <caret line="229" column="54" selection-start-line="229" selection-start-column="48" selection-end-line="229" selection-end-column="54" />
           <folding>
             <element signature="e#0#13#0" expanded="true" />
           </folding>
