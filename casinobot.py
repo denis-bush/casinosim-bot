@@ -1,11 +1,11 @@
 from random import randint
 from time import sleep
-import telebot
+from telebot import TeleBot, types
 
 # import os
 # token = os.getenv("token")
 from config import token
-bot = telebot.TeleBot(token)
+bot = TeleBot(token)
 
 # Инициализируем базу данных в виде словаря
 DATABASE = {}
@@ -28,7 +28,7 @@ def registerUser(message):
     bot.send_message(message.chat.id, username + '? Хорошо, я запомнил!')
     # Внесение в БД и вызов главного меню
     DATABASE[user_id] = {'name': username, 'balance': 1000, 'bet': 0, 'score': 0, 'dice_won': 0, 'dice_lost': 0,
-                         'slot_won': 0, 'slot_lost': 0, 'game_id': 1}
+                         'slot_won': 0, 'slot_lost': 0, 'game_id': 0}
     sleep(0.5)
     bot.send_message(message.chat.id, str(username) + ', Ваш стартовый баланс: ' +
                      str(DATABASE[user_id]['balance']) + ' очков')
@@ -38,12 +38,12 @@ def registerUser(message):
 
 # Клавиатура главного меню
 def mainMenu(message):
-    keyboard = telebot.types.ReplyKeyboardMarkup(row_width=2)
-    b_dice = telebot.types.KeyboardButton(text='🎲 Сыграть в "Кости"')
-    b_slot = telebot.types.KeyboardButton(text='🎰 Сыграть в Слот-машину')
-    b_stat = telebot.types.KeyboardButton(text='📊 Статистика профиля')
-    b_help = telebot.types.KeyboardButton(text='❓ Справка')
-    b_reset = telebot.types.KeyboardButton(text='❌ Сброс данных')
+    keyboard = types.ReplyKeyboardMarkup(row_width=2)
+    b_dice = types.KeyboardButton(text='🎲 Сыграть в "Кости"')
+    b_slot = types.KeyboardButton(text='🎰 Сыграть в Слот-машину')
+    b_stat = types.KeyboardButton(text='📊 Статистика профиля')
+    b_help = types.KeyboardButton(text='❓ Справка')
+    b_reset = types.KeyboardButton(text='❌ Сброс данных')
     keyboard.row(b_dice, b_slot)
     keyboard.row(b_stat)
     keyboard.row(b_help, b_reset)
@@ -54,9 +54,9 @@ def mainMenu(message):
 @bot.message_handler(func=lambda message: message.text == '🎲 Сыграть в "Кости"' and message.content_type == 'text')
 def diceStart(message):
     DATABASE[message.from_user.id]['game_id'] = 1
-    keyboard = telebot.types.ReplyKeyboardMarkup(row_width=2, resize_keyboard=True)
-    b_start = telebot.types.KeyboardButton(text='Начать игру')
-    b_back = telebot.types.KeyboardButton(text='🔙 Вернуться в главное меню')
+    keyboard = types.ReplyKeyboardMarkup(row_width=2, resize_keyboard=True)
+    b_start = types.KeyboardButton(text='Начать игру')
+    b_back = types.KeyboardButton(text='🔙 Вернуться в главное меню')
     keyboard.row(b_start, b_back)
     bot.send_message(message.chat.id, text='Добро пожаловать в игру кости!', reply_markup=keyboard)
 
@@ -65,7 +65,7 @@ def diceStart(message):
 @bot.message_handler(func=lambda message: message.text == 'Начать игру' and message.content_type == 'text')
 def askBet(message):
     bot.send_message(message.chat.id, text='Выберите свою ставку (макс. ставка - 50 очков)',
-                     reply_markup=telebot.types.ReplyKeyboardRemove())
+                     reply_markup=types.ReplyKeyboardRemove())
     bot.register_next_step_handler(message, setBet)
 
 
@@ -101,7 +101,7 @@ def dicePlay(message):
     curr_score = 0
 
     # Бросаем кости
-    bot.send_message(message.chat.id, text='Бросок... 🎲🎲', reply_markup=telebot.types.ReplyKeyboardRemove())
+    bot.send_message(message.chat.id, text='Бросок... 🎲🎲', reply_markup=types.ReplyKeyboardRemove())
     sleep(1)
     bot.send_message(message.chat.id, text= str(DATABASE[user_id]['name']) + ': ' + die_faces[die1] + die_faces[die2]
                                             + '\n' + 'Бот: ' + die_faces[die3] + die_faces[die4])
@@ -127,9 +127,9 @@ def dicePlay(message):
         bot.send_message(message.chat.id, text='Ничья.')
     DATABASE[user_id]['score'] += curr_score
 
-    keyboard = telebot.types.ReplyKeyboardMarkup(row_width=2, resize_keyboard=True)
-    b_again = telebot.types.KeyboardButton(text='Бросить ещё раз')
-    b_stop = telebot.types.KeyboardButton(text='Закончить игру в "Кости"')
+    keyboard = types.ReplyKeyboardMarkup(row_width=2, resize_keyboard=True)
+    b_again = types.KeyboardButton(text='Бросить ещё раз')
+    b_stop = types.KeyboardButton(text='Закончить игру в "Кости"')
     keyboard.row(b_again, b_stop)
     sleep(0.5)
     bot.send_message(message.chat.id, text='Сыграем ещё?', reply_markup=keyboard)
@@ -163,10 +163,10 @@ def backToMenu(message):
 @bot.message_handler(func=lambda message: message.text == '🎰 Сыграть в Слот-машину' and message.content_type == 'text')
 def slotStart(message):
     DATABASE[message.from_user.id]['game_id'] = 2
-    keyboard = telebot.types.ReplyKeyboardMarkup(row_width=2, resize_keyboard=True)
-    b_start = telebot.types.KeyboardButton(text='Начать игру')
-    b_back = telebot.types.KeyboardButton(text='🔙 Вернуться в главное меню')
-    b_table = telebot.types.KeyboardButton(text='📋 Таблица выигрышей')
+    keyboard = types.ReplyKeyboardMarkup(row_width=2, resize_keyboard=True)
+    b_start = types.KeyboardButton(text='Начать игру')
+    b_back = types.KeyboardButton(text='🔙 Вернуться в главное меню')
+    b_table = types.KeyboardButton(text='📋 Таблица выигрышей')
     keyboard.row(b_start, b_back)
     keyboard.row(b_table)
     bot.send_message(message.chat.id, text='Добро пожаловать в Слот-машину!', reply_markup=keyboard)
@@ -212,7 +212,7 @@ def slotPlay(message):
     DATABASE[user_id]['balance'] += curr_score
     DATABASE[user_id]['score'] += curr_score
 
-    bot.send_message(message.chat.id, text='Запускаю Слот-машину... 📍', reply_markup=telebot.types.ReplyKeyboardRemove())
+    bot.send_message(message.chat.id, text='Запускаю Слот-машину... 📍', reply_markup=types.ReplyKeyboardRemove())
     sleep(1)
     bot.send_message(message.chat.id, text=slot_line)
     sleep(0.5)
@@ -230,9 +230,9 @@ def slotPlay(message):
         bot.send_message(message.chat.id, text='Ставка вернулась.')
         bot.send_message(message.chat.id, text='💰 Ваш баланс: ' + str(DATABASE[user_id]['balance']) + ' очков.')
 
-    keyboard = telebot.types.ReplyKeyboardMarkup(row_width=2, resize_keyboard=True)
-    b_again = telebot.types.KeyboardButton(text='Сыграть ещё раз')
-    b_stop = telebot.types.KeyboardButton(text='Закончить игру в Слот-машину')
+    keyboard = types.ReplyKeyboardMarkup(row_width=2, resize_keyboard=True)
+    b_again = types.KeyboardButton(text='Сыграть ещё раз')
+    b_stop = types.KeyboardButton(text='Закончить игру в Слот-машину')
     keyboard.row(b_again, b_stop)
     sleep(0.5)
     bot.send_message(message.chat.id, text='Сыграем ещё?', reply_markup=keyboard)
@@ -270,10 +270,10 @@ def printStats(message):
 # Вывод справочной информации
 @bot.message_handler(func=lambda message: message.text == '❓ Справка' and message.content_type == 'text')
 def helpMenu(message):
-    keyboard = telebot.types.ReplyKeyboardMarkup(row_width=2)
-    b_about = telebot.types.KeyboardButton(text='📄 О программе')
-    b_law = telebot.types.KeyboardButton(text='📕 Законодательство РФ об азартных играх')
-    b_back = telebot.types.KeyboardButton(text='🔙 Вернуться в главное меню')
+    keyboard = types.ReplyKeyboardMarkup(row_width=2)
+    b_about = types.KeyboardButton(text='📄 О программе')
+    b_law = types.KeyboardButton(text='📕 Законодательство РФ об азартных играх')
+    b_back = types.KeyboardButton(text='🔙 Вернуться в главное меню')
     keyboard.row(b_about, b_law)
     keyboard.row(b_back)
     bot.send_message(message.chat.id, text='Выберите раздел', reply_markup=keyboard)
@@ -299,9 +299,9 @@ def printLaw(message):
 # Запрос удаления текущего пользователя
 @bot.message_handler(func=lambda message: message.text == '❌ Сброс данных' and message.content_type == 'text')
 def resetBot(message):
-    keyboard = telebot.types.ReplyKeyboardMarkup(row_width=2, resize_keyboard=True)
-    b_yes = telebot.types.KeyboardButton(text='Да, удалить мой профиль')
-    b_no = telebot.types.KeyboardButton(text='Нет, я передумал')
+    keyboard = types.ReplyKeyboardMarkup(row_width=2, resize_keyboard=True)
+    b_yes = types.KeyboardButton(text='Да, удалить мой профиль')
+    b_no = types.KeyboardButton(text='Нет, я передумал')
     keyboard.row(b_yes, b_no)
     bot.send_message(message.chat.id, text='⚠ Внимание! Данное действие удалит Ваш профиль и все связанные '
                                            'с ним данные! Вы уверены, что хотите продолжить?', reply_markup=keyboard)
@@ -311,7 +311,7 @@ def resetBot(message):
 @bot.message_handler(func=lambda message: message.text == 'Да, удалить мой профиль' and message.content_type == 'text')
 def resetConfirm(message):
     bot.send_message(message.chat.id, text='Принято, удаляю данные из базы...',
-                     reply_markup=telebot.types.ReplyKeyboardRemove())
+                     reply_markup=types.ReplyKeyboardRemove())
     DATABASE.pop(message.from_user.id)
 
 
@@ -329,7 +329,7 @@ def textHandler(message):
                                text='Пожалуйста, зарегистрируйтесь с помощью команды /start')
    text = message.text.lower()
 
-   if 'привет':
+   if 'привет' in text:
        bot.send_message(message.chat.id, text='Привет! :)')
    elif 'пока' in text:
        bot.send_message(message.chat.id, text='До встречи!')
