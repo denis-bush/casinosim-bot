@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="5de423e3-7a2b-43c5-9f2a-0ca2fd1d74e1" name="Default Changelist" comment="" />
+    <list default="true" id="5de423e3-7a2b-43c5-9f2a-0ca2fd1d74e1" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/casinobot.py" beforeDir="false" afterPath="$PROJECT_DIR$/casinobot.py" afterDir="false" />
+    </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -13,8 +15,11 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/casinobot.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-5384">
-              <caret line="2" column="34" lean-forward="true" selection-start-line="2" selection-start-column="34" selection-end-line="3" />
+            <state relative-caret-position="1997">
+              <caret line="199" column="25" selection-start-line="199" selection-start-column="19" selection-end-line="199" selection-end-column="25" />
+              <folding>
+                <element signature="e#0#26#0" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -48,10 +53,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>setBe</find>
-      <find>diceAskBet</find>
-      <find>enco</find>
-      <find>слот</find>
       <find>start</find>
       <find>вернут</find>
       <find>сыграть в &quot;</find>
@@ -78,6 +79,10 @@
       <find>telebo</find>
       <find>telebot.typ</find>
       <find>data</find>
+      <find>игр</find>
+      <find>line</find>
+      <find>выво</find>
+      <find>(0, 5)</find>
     </findStrings>
     <replaceStrings>
       <replace>text=</replace>
@@ -96,6 +101,7 @@
       <replace>slot_line</replace>
       <replace>–</replace>
       <replace>typ</replace>
+      <replace>(1, 6)</replace>
     </replaceStrings>
   </component>
   <component name="Git.Settings">
@@ -315,8 +321,11 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/casinobot.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-5384">
-          <caret line="2" column="34" lean-forward="true" selection-start-line="2" selection-start-column="34" selection-end-line="3" />
+        <state relative-caret-position="1997">
+          <caret line="199" column="25" selection-start-line="199" selection-start-column="19" selection-end-line="199" selection-end-column="25" />
+          <folding>
+            <element signature="e#0#26#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
