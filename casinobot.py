@@ -278,7 +278,7 @@ def helpMenu(message):
 
 @bot.message_handler(func=lambda message: message.text == '📄 О программе' and message.content_type == 'text')
 def printAbout(message):
-    txtfile = open(about.txt, 'r')
+    txtfile = open('about.txt', 'r')
     reply = txtfile.read()
     bot.send_message(message.chat.id, text=reply)
     txtfile.close()
@@ -287,7 +287,7 @@ def printAbout(message):
 @bot.message_handler(func=lambda message: message.text == '📕 Законодательство РФ об азартных играх'
                                           and message.content_type == 'text')
 def printLaw(message):
-    txtfile = open(law.txt, 'r')
+    txtfile = open('law.txt', 'r')
     reply = txtfile.read()
     bot.send_message(message.chat.id, text=reply)
     txtfile.close()
