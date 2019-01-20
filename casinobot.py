@@ -219,7 +219,7 @@ def slotPlay(message):
         sleep(0.5)
         bot.send_message(message.chat.id, text='💰 Ваш баланс: ' + str(DATABASE[user_id]['balance']) + ' очков.')
     elif curr_score < 0:
-        DATABASE[user_id]['slot_lost'] += curr_score
+        DATABASE[user_id]['slot_lost'] += abs(curr_score)
         bot.send_message(message.chat.id, text='Ставка потеряна. 😔 Вы проиграли ' + str(bet) + ' очков.')
         sleep(0.5)
         bot.send_message(message.chat.id, text='💰 Ваш баланс: ' + str(DATABASE[user_id]['balance']) + ' очков.')
