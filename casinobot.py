@@ -199,7 +199,7 @@ def slotPlay(message):
     curr_score = bet
 
     # Формируем игровую линию Слот-машины
-    slot_cells = ['🍒', '🍋', '🍉', '🥝', '🔔', '💸']
+    slot_cells = ['🍒', '🍋', '🍉', '🍍', '🔔', '💸']
     cell1 = randint(0, 5)
     cell2 = randint(0, 5)
     cell3 = randint(0, 5)
@@ -211,7 +211,7 @@ def slotPlay(message):
         bot.send_message(message.chat.id, text='Джекпот!!!')
     elif slot_line == '🔔🔔🔔':
         curr_score *= 20
-    elif slot_line == '🥝🥝🥝':
+    elif slot_line == '🍍🍍🍍':
         curr_score *= 15
     elif slot_line == '🍉🍉🍉':
         curr_score *= 10
