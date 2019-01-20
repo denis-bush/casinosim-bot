@@ -173,8 +173,10 @@ def slotStart(message):
 
 @bot.message_handler(func=lambda message: message.text == '📋 Таблица выигрышей' and message.content_type == 'text')
 def slotTable(message):
-    from paytable import reply
+    txtfile = open('paytable.txt', 'r')
+    reply = txtfile.read()
     bot.send_message(message.chat.id, text=reply)
+    txtfile.close()
 
 def slotPlay(message):
     user_id = message.from_user.id
