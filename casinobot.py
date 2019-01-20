@@ -278,15 +278,19 @@ def helpMenu(message):
 
 @bot.message_handler(func=lambda message: message.text == '📄 О программе' and message.content_type == 'text')
 def printAbout(message):
-    from about import reply
+    txtfile = open(about.txt, 'r')
+    reply = txtfile.read()
     bot.send_message(message.chat.id, text=reply)
+    txtfile.close()
 
 
 @bot.message_handler(func=lambda message: message.text == '📕 Законодательство РФ об азартных играх'
                                           and message.content_type == 'text')
 def printLaw(message):
-    from law import reply
+    txtfile = open(law.txt, 'r')
+    reply = txtfile.read()
     bot.send_message(message.chat.id, text=reply)
+    txtfile.close()
 
 
 # Запрос удаления текущего пользователя
@@ -322,9 +326,9 @@ def textHandler(message):
                                text='Пожалуйста, зарегистрируйтесь с помощью команды /start')
    text = message.text.lower()
 
-   if text == 'привет':
+   if 'привет':
        bot.send_message(message.chat.id, text='Привет! :)')
-   elif text == 'пока':
+   elif 'пока' in text:
        bot.send_message(message.chat.id, text='До встречи!')
    else:
        bot.send_message(message.chat.id,
