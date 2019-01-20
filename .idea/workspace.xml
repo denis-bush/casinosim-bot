@@ -2,9 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="5de423e3-7a2b-43c5-9f2a-0ca2fd1d74e1" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/about.py" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/casinobot.py" beforeDir="false" afterPath="$PROJECT_DIR$/casinobot.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/law.py" beforeDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -17,20 +15,20 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/casinobot.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="314">
-              <caret line="176" column="26" lean-forward="true" selection-start-line="176" selection-start-column="26" selection-end-line="176" selection-end-column="26" />
+            <state relative-caret-position="119">
+              <caret line="7" column="18" selection-start-line="7" selection-start-column="18" selection-end-line="7" selection-end-column="18" />
               <folding>
-                <element signature="e#0#13#0" expanded="true" />
+                <element signature="e#12#38#0" expanded="true" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/paytable.py">
+        <entry file="file://$PROJECT_DIR$/config.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="170">
-              <caret line="10" lean-forward="true" selection-start-line="10" selection-end-line="10" />
+            <state relative-caret-position="17">
+              <caret line="1" selection-start-line="1" selection-end-line="1" />
             </state>
           </provider>
         </entry>
@@ -46,9 +44,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>datab</find>
-      <find>int(database[user_id]['bet'])</find>
-      <find>&quot;</find>
       <find>&quot;Кости&quot;</find>
       <find>машин</find>
       <find>set</find>
@@ -76,6 +71,9 @@
       <find>Закончит</find>
       <find>законч</find>
       <find>score</find>
+      <find>random.</find>
+      <find>os</find>
+      <find>os</find>
     </findStrings>
     <replaceStrings>
       <replace>text=</replace>
@@ -108,6 +106,7 @@
         <option value="$PROJECT_DIR$/paytable.py" />
         <option value="$PROJECT_DIR$/about.py" />
         <option value="$PROJECT_DIR$/casinobot.py" />
+        <option value="$PROJECT_DIR$/config.py" />
       </list>
     </option>
   </component>
@@ -218,7 +217,7 @@
     <frame x="-7" y="-7" width="1295" height="695" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" weight="0.24244833" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.24244833" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
@@ -302,12 +301,19 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/config.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="17">
+          <caret line="1" selection-start-line="1" selection-end-line="1" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/casinobot.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="314">
-          <caret line="176" column="26" lean-forward="true" selection-start-line="176" selection-start-column="26" selection-end-line="176" selection-end-column="26" />
+        <state relative-caret-position="119">
+          <caret line="7" column="18" selection-start-line="7" selection-start-column="18" selection-end-line="7" selection-end-column="18" />
           <folding>
-            <element signature="e#0#13#0" expanded="true" />
+            <element signature="e#12#38#0" expanded="true" />
           </folding>
         </state>
       </provider>

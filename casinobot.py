@@ -1,13 +1,14 @@
-import random
-# import os
+from random import randint
 from time import sleep
-
 import telebot
+
+# import os
+# token = os.getenv("token")
+from config import token
+bot = telebot.TeleBot(token)
 
 # Инициализируем базу данных в виде словаря
 DATABASE = {}
-# token = os.getenv("token")
-bot = telebot.TeleBot("631046420:AAHgOJwxSO8g1-hN9boIJYOC-nPEWKN-mDc")
 
 
 # Обработчик команды /start
@@ -89,10 +90,10 @@ def setBet(message):
 
 def dicePlay(message):
     die_faces = ['⚀', '⚁', '⚂', '⚃', '⚄', '⚅']
-    die1 = random.randint(0, 5)
-    die2 = random.randint(0, 5)
-    die3 = random.randint(0, 5)
-    die4 = random.randint(0, 5)
+    die1 = randint(0, 5)
+    die2 = randint(0, 5)
+    die3 = randint(0, 5)
+    die4 = randint(0, 5)
     diesum1 = die1 + die2
     diesum2 = die3 + die4
     user_id = message.from_user.id
@@ -183,9 +184,9 @@ def slotPlay(message):
     bet = DATABASE[user_id]['bet']
     curr_score = bet
     slot_cells = ['🍒', '🍋', '🍉', '🥝', '🔔', '💸']
-    cell1 = random.randint(0, 5)
-    cell2 = random.randint(0, 5)
-    cell3 = random.randint(0, 5)
+    cell1 = randint(0, 5)
+    cell2 = randint(0, 5)
+    cell3 = randint(0, 5)
     slot_line = slot_cells[cell1] + slot_cells[cell2] + slot_cells[cell3]
     
     if slot_line == '💸💸💸':
